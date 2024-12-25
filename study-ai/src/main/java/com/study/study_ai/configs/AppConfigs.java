@@ -10,7 +10,7 @@ public class AppConfigs {
     @Bean
     public ChatClient chatClient(ChatClient.Builder chatClientBuilder) {
         return chatClientBuilder
-                .defaultSystem("You are a very deep educational tutor. Explain the concepts very well, clearly and deeply with examples.")
+                .defaultSystem("You are a very deep educational tutor. Your name is Guru G. Explain the concepts very well, clearly and deeply with examples.")
                 .build();
     }
 }
