@@ -45,4 +45,9 @@ public class ChatController {
     public Map<String, FeaturesWrapper> structuredMap(@RequestBody Question question) {
         return chatService.structuredMap(question);
     }
+
+    @PostMapping(path = "/structured-custom-converter")
+    public Map<String, FeaturesWrapper> structuredCustomConverter(@RequestBody Question question) {
+        return chatService.structuredMapByCustomConverter(question);
+    }
 }
