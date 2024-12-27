@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: ankane/pgvector
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: pgdb
+            - name: POSTGRES_USER
+              value: mswami
+            - name: POSTGRES_PASSWORD
+              value: pgdb-mswami-12345678
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pg-vector-postgres
+  namespace: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+
+# Most frequently used commands
+# kubectl version --client
+# kubectl config get-contexts
+# kubectl config current-context
+# kubectl get namespaces
+# kubectl get pods -n postgres
+# kubectl create namespaces postgres
+# kubectl delete namespaces postgres
+# kubectl get nodes
+# kubectl apply -f src/main/resources/pgvector/postgres-deployment.yaml
+# kubectl port-forward --namespace postgres svc/pg-vector-postgres 5432:5432 &
+#  PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U mswami -d pgdb -p 5432
