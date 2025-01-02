@@ -1,0 +1,90 @@
+[
+  {
+    "id": "1",
+    "content": "Artificial Intelligence (AI) is transforming industries by automating processes and improving decision-making.",
+    "metadata": {
+      "author": "John Doe",
+      "category": "Technology",
+      "tags": ["AI", "machine learning", "automation"]
+    }
+  },
+  {
+    "id": "2",
+    "content": "Climate change has widespread effects on global weather patterns, ecosystems, and economies.",
+    "metadata": {
+      "author": "Jane Smith",
+      "category": "Environment",
+      "tags": ["climate", "environment", "global warming"]
+    }
+  },
+  {
+    "id": "101",
+    "content": "High-quality wireless earbuds with noise-canceling features and long battery life.",
+    "metadata": {
+      "category": "Electronics",
+      "brand": "SoundPro",
+      "price": 99.99
+    }
+  },
+  {
+    "id": "102",
+    "content": "A reusable, BPA-free water bottle designed for sustainability and convenience.",
+    "metadata": {
+      "category": "Home & Lifestyle",
+      "brand": "EcoFlow",
+      "price": 19.99
+    }
+  },
+  {
+    "id": "FAQ001",
+    "content": "Our return policy allows returns within 30 days of purchase with a receipt.",
+    "metadata": {
+      "question": "What is the return policy?",
+      "category": "Customer Support"
+    }
+  },
+  {
+    "id": "FAQ002",
+    "content": "You can track your order using the tracking number sent to your email.",
+    "metadata": {
+      "question": "How can I track my order?",
+      "category": "Customer Support"
+    }
+  },
+  {
+    "id": "MOV001",
+    "content": "A mind-bending thriller with stunning visuals and a compelling story.",
+    "metadata": {
+      "title": "Inception",
+      "rating": 4.8,
+      "genre": "Sci-Fi"
+    }
+  },
+  {
+    "id": "MOV002",
+    "content": "An iconic sci-fi movie that redefined the genre with groundbreaking special effects.",
+    "metadata": {
+      "title": "The Matrix",
+      "rating": 4.9,
+      "genre": "Sci-Fi"
+    }
+  },
+  {
+    "id": "REC001",
+    "content": "Cook pasta. Mix eggs and cheese. Fry pancetta. Combine everything.",
+    "metadata": {
+      "name": "Pasta Carbonara",
+      "cuisine": "Italian",
+      "difficulty": "Easy"
+    }
+  },
+  {
+    "id": "REC002",
+    "content": "Mix dry and wet ingredients. Bake at 350°F for 30 minutes. Cool before serving.",
+    "metadata": {
+      "name": "Chocolate Cake",
+      "cuisine": "Dessert",
+      "difficulty": "Medium"
+    }
+  }
+]

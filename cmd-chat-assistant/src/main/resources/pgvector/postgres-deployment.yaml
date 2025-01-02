@@ -50,5 +50,4 @@ spec:
 # kubectl delete namespaces postgres
 # kubectl get nodes
 # kubectl apply -f src/main/resources/pgvector/postgres-deployment.yaml
-# kubectl port-forward --namespace postgres svc/pg-vector-postgres 5432:5432 &
-#  PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U mswami -d pgdb -p 5432
+# kubectl port-forward --namespace postgres svc/pg-vector-postgres 5432:5432

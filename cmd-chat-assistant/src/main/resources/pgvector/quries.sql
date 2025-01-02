@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS vector_store(
 
 CREATE INDEX ON vector_store using HNSW (embedding vector_cosine_ops);
 
+DROP TABLE vector_store;
+
 CREATE TABLE chat_memory (
                              id TEXT PRIMARY KEY,
                              conversation_id TEXT NOT NULL,
@@ -23,3 +25,4 @@ CREATE INDEX idx_conversation_id ON chat_memory(conversation_id);
 SELECT * FROM pg_available_extensions WHERE name = 'vector';
 
 SELECT * FROM vector_store;
+SELECT * FROM chat_memory;

@@ -1,0 +1,14 @@
+Deploy Cassandra on Kubernetes:-
+helm install cassandra bitnami/cassandra -f cassandra-values.yaml --namespace cassandra
+
+Enter inside the cluster and run the cqlsh command:-
+kubectl exec -it $(kubectl get pods -n cassandra -l app.kubernetes.io/name=cassandra -o jsonpath="{.items[0].metadata.name}") -n cassandra -- cqlsh -u admin -p admin
+kubectl exec -it cassandra-0 -n cassandra -- cqlsh -u admin -p admin
+
+Create a key space:-
+CREATE KEYSPACE study_ai
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3};
+
+Port Forward:-
+# kubectl port-forward --namespace cassandra svc/cassandra 9042:9042
+kubectl port-forward --namespace cassandra svc/cassandra-headless 9042:9042 7000:7000 7001:7001 7199:7199

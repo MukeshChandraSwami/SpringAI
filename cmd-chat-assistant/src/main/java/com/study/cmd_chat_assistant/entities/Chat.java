@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "chat_memory")
 @Entity
+@Profile("devPG")
 public class Chat {
         @Id
         @Column(name="id", nullable = false)

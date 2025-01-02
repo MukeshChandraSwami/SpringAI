@@ -12,17 +12,23 @@ public class CmdChatService {
 
     private ChatClient chatClient;
     private CustomPgChatMemoryAdvisor customPgChatMemoryAdvisor;
+    private CassandraVectorService cassandraVectorService;
 
     public CmdChatService(ChatClient.Builder chatClientBuilder,
-                          CustomPgChatMemoryAdvisor customPgChatMemoryAdvisor) {
+                          CustomPgChatMemoryAdvisor customPgChatMemoryAdvisor,
+                          CassandraVectorService cassandraVectorService) {
         this.chatClient = chatClientBuilder.build();
         this.customPgChatMemoryAdvisor = customPgChatMemoryAdvisor;
+        this.cassandraVectorService = cassandraVectorService;
     }
 
     public void chat() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter conversation ID: ");
         UUID chatId = validateAndGetChatId(scanner.nextLine());
+
+        // cassandraVectorService.loadDocumentsInStore();
+        // cassandraVectorService.loadMobileDocumentsInStore();
 
         while (true) {
             System.out.print("You: ");
@@ -36,6 +42,14 @@ public class CmdChatService {
                     .advisors(customPgChatMemoryAdvisor)
                     .call().content();
             System.out.println("Bot: " + response);
+            System.out.print("Do you want to request data from local vector (Y/N):- ");
+            if(scanner.nextLine().equalsIgnoreCase("Y")) {
+                System.out.print("Enter query: ");
+                String query = scanner.nextLine();
+                cassandraVectorService.search(query).forEach(document -> {
+                    System.out.println("Documents: " + document);
+                });
+            }
         }
         scanner.close();
     }

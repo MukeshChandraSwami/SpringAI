@@ -1,0 +1,5 @@
+cluster:
+  size: 3
+dbUser:
+  user: admin
+  password: admin

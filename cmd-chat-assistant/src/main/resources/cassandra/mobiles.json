@@ -1,0 +1,112 @@
+[
+  {
+    "id": "1",
+    "content": "The Apple iPhone 15 Pro Max features a titanium design, a 48MP camera, and the A17 Bionic chip for unparalleled performance.",
+    "metadata": {
+      "brand": "Apple",
+      "model": "iPhone 15 Pro Max",
+      "price": 1199,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "2",
+    "content": "The Samsung Galaxy S23 Ultra boasts a 200MP camera, Snapdragon 8 Gen 2 processor, and an impressive 6.8-inch Dynamic AMOLED display.",
+    "metadata": {
+      "brand": "Samsung",
+      "model": "Galaxy S23 Ultra",
+      "price": 1199,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "3",
+    "content": "Google Pixel 8 Pro offers exceptional AI-powered photography, Tensor G3 chip, and a clean Android experience.",
+    "metadata": {
+      "brand": "Google",
+      "model": "Pixel 8 Pro",
+      "price": 999,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "4",
+    "content": "The OnePlus 11 5G provides flagship performance with a Snapdragon 8 Gen 2 chip, 120Hz AMOLED display, and Hasselblad cameras.",
+    "metadata": {
+      "brand": "OnePlus",
+      "model": "OnePlus 11 5G",
+      "price": 699,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "5",
+    "content": "Xiaomi 13 Pro is equipped with a Leica-tuned camera system, Snapdragon 8 Gen 2 chip, and a stunning 6.73-inch AMOLED display.",
+    "metadata": {
+      "brand": "Xiaomi",
+      "model": "13 Pro",
+      "price": 899,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "6",
+    "content": "The Oppo Find X6 Pro stands out with its 1-inch sensor camera, Dimensity 9200 chipset, and a sleek, premium design.",
+    "metadata": {
+      "brand": "Oppo",
+      "model": "Find X6 Pro",
+      "price": 999,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "7",
+    "content": "Vivo X90 Pro+ delivers excellent photography with Zeiss optics, Snapdragon 8 Gen 2 chip, and a 120Hz AMOLED display.",
+    "metadata": {
+      "brand": "Vivo",
+      "model": "X90 Pro+",
+      "price": 1199,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "8",
+    "content": "The Asus ROG Phone 7 Ultimate is a gamer's dream with Snapdragon 8 Gen 2, a 165Hz AMOLED display, and advanced cooling solutions.",
+    "metadata": {
+      "brand": "Asus",
+      "model": "ROG Phone 7 Ultimate",
+      "price": 1299,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "9",
+    "content": "The Motorola Edge 40 Ultra features a curved pOLED display, Snapdragon 8 Gen 2, and a 200MP main camera for stunning shots.",
+    "metadata": {
+      "brand": "Motorola",
+      "model": "Edge 40 Ultra",
+      "price": 899,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  },
+  {
+    "id": "10",
+    "content": "Realme GT 5 delivers top-notch performance with a Snapdragon 8 Gen 2, 240W fast charging, and a premium AMOLED display.",
+    "metadata": {
+      "brand": "Realme",
+      "model": "GT 5",
+      "price": 599,
+      "category": "Smartphones",
+      "release_year": 2023
+    }
+  }
+]
