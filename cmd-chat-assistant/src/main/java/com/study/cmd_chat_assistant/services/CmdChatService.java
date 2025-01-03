@@ -39,6 +39,7 @@ public class CmdChatService {
             customPgChatMemoryAdvisor.setConversationId(chatId);
             String response = chatClient
                     .prompt(message)
+                    .functions("hotelBookingService")
                     .advisors(customPgChatMemoryAdvisor)
                     .call().content();
             System.out.println("Bot: " + response);
