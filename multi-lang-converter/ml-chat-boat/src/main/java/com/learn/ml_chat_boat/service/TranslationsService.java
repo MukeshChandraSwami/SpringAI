@@ -9,5 +9,9 @@ import java.util.Map;
 @Service
 public interface TranslationsService {
 
+    String TRANSLATION_TEMPLATE = """
+            Translate {userText} to {languages}
+            """;
+
     public Map<String, List<String>> translate(TranslationsRequest request);
 }

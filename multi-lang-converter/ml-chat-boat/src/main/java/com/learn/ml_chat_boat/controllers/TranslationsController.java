@@ -3,7 +3,7 @@ package com.learn.ml_chat_boat.controllers;
 import com.learn.ml_chat_boat.request.TranslationsRequest;
 import com.learn.ml_chat_boat.response.TranslationsResponse;
 import com.learn.ml_chat_boat.service.TranslationsService;
-import com.learn.ml_chat_boat.service.impl.TranslationsServiceImpl;
+import com.learn.ml_chat_boat.service.impl.OpenAiTranslationsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class TranslationsController {
 
     private final TranslationsService translationsService;
 
-    public TranslationsController(TranslationsServiceImpl translationsService) {
+    public TranslationsController(OpenAiTranslationsService translationsService) {
         this.translationsService = translationsService;
     }
 
