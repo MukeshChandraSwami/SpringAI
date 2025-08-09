@@ -13,5 +13,5 @@ public interface TranslationsService {
             Translate {userText} to {languages}
             """;
 
-    public Map<String, List<String>> translate(TranslationsRequest request);
+    Map<String, List<String>> translate(TranslationsRequest request);
 }

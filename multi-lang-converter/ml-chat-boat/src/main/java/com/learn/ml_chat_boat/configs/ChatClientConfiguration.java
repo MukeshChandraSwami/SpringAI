@@ -8,12 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import static com.learn.ml_chat_boat.constants.SystemPrompts.TRANSLATION_PROMPT;
+import static org.springframework.ai.model.SpringAIModels.ANTHROPIC;
+import static org.springframework.ai.model.SpringAIModels.OPENAI;
 
 @Configuration
 public class ChatClientConfiguration {
 
     @Bean(name = "open-ai-client")
-    // @Profile("openai")
+    @Profile(OPENAI)
     public ChatClient openAiChatClient(OpenAiChatModel chatModel) {
         return ChatClient.builder(chatModel)
                 .defaultSystem(TRANSLATION_PROMPT)
@@ -21,7 +23,7 @@ public class ChatClientConfiguration {
     }
 
     @Bean(name = "anthropic-ai-client")
-    @Profile("anthropic")
+    @Profile(ANTHROPIC)
     public ChatClient anthropicAiChatClient(AnthropicChatModel chatModel) {
         return ChatClient.builder(chatModel)
                 .defaultSystem(TRANSLATION_PROMPT)

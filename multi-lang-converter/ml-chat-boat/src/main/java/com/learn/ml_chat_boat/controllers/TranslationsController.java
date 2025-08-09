@@ -4,6 +4,7 @@ import com.learn.ml_chat_boat.request.TranslationsRequest;
 import com.learn.ml_chat_boat.response.TranslationsResponse;
 import com.learn.ml_chat_boat.service.TranslationsService;
 import com.learn.ml_chat_boat.service.impl.OpenAiTranslationsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,9 @@ import static com.learn.ml_chat_boat.constants.AppConstants.RoutingConstants.TRA
 @RequestMapping(TRANSLATE)
 public class TranslationsController {
 
-    private final TranslationsService translationsService;
+    @Autowired
+    private TranslationsService translationsService;
 
-    public TranslationsController(OpenAiTranslationsService translationsService) {
-        this.translationsService = translationsService;
-    }
 
     @PostMapping
     public TranslationsResponse translate(@RequestBody TranslationsRequest request) {

@@ -5,13 +5,17 @@ import com.learn.ml_chat_boat.request.TranslationsRequest;
 import com.learn.ml_chat_boat.service.TranslationsService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.ai.model.SpringAIModels.OPENAI;
+
 @Service
+@Profile(OPENAI)
 public class OpenAiTranslationsService implements TranslationsService {
 
     private final ChatClient chatClient;
@@ -28,7 +32,7 @@ public class OpenAiTranslationsService implements TranslationsService {
                         .param("languages", request.getLangs())
                 )
                 .call()
-                .entity(new ParameterizedTypeReference<Translations>() {
+                .entity(new ParameterizedTypeReference<>() {
                 });
         return translations.getTranslations();
     }
