@@ -1,6 +1,5 @@
 package com.learn.ml_chat_boat.service.impl;
 
-import com.learn.ml_chat_boat.models.Translations;
 import com.learn.ml_chat_boat.request.TranslationsRequest;
 import com.learn.ml_chat_boat.service.TranslationsService;
 import org.springframework.ai.chat.client.ChatClient;
