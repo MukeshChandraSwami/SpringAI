@@ -1,6 +1,5 @@
 package com.learn.ml_chat_boat.service.impl;
 
-import com.learn.ml_chat_boat.models.Translations;
 import com.learn.ml_chat_boat.request.TranslationsRequest;
 import com.learn.ml_chat_boat.service.TranslationsService;
 import org.springframework.ai.chat.client.ChatClient;
@@ -11,14 +10,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.ai.model.SpringAIModels.OPENAI;
+import static org.springframework.ai.model.SpringAIModels.ANTHROPIC;
 
 @Service
-@Profile(OPENAI)
-public class OpenAiTranslationsService extends TranslationsService {
+@Profile(ANTHROPIC)
+public class AnthropicTranslationsService extends TranslationsService {
 
 
-    public OpenAiTranslationsService(@Qualifier("open-ai-client") ChatClient chatClient) {
+    public AnthropicTranslationsService(@Qualifier("anthropic-ai-client") ChatClient chatClient) {
         super(chatClient);
     }
 
