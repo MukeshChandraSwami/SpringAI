@@ -1,0 +1,49 @@
+package com.learn.search.controllers;
+
+import com.learn.search.requests.CreateSearchDataRequest;
+import com.learn.search.requests.GlobalSearchRequest;
+import com.learn.search.response.CreateSearchDataResponse;
+import com.learn.search.response.Response;
+import com.learn.search.response.SearchResponse;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+
+import static com.learn.search.constants.AppConstants.RoutingConstants.ACT;
+import static com.learn.search.constants.AppConstants.RoutingConstants.ACT_ID;
+import static com.learn.search.constants.AppConstants.RoutingConstants.SEARCH;
+
+@RestController
+@RequestMapping(ACT + ACT_ID)
+public class GlobalSearch {
+
+    @PostMapping
+    public Response createSearchData(
+            @PathVariable UUID acct_id,
+            @RequestBody CreateSearchDataRequest request) {
+
+        return CreateSearchDataResponse.builder()
+                .success(true)
+                .responseMsg("Data Saved")
+                .responseCode(200)
+                .resourceId(request.getResourceId())
+                .content(request.getContent())
+                .id(UUID.randomUUID())
+                .build();
+    }
+
+    @PostMapping(SEARCH)
+    public Response search(@PathVariable UUID acct_id,
+                           @RequestBody GlobalSearchRequest request) {
+
+        return SearchResponse.builder()
+                .success(true)
+                .responseMsg("Searched Data for query:- " + request.getQuery())
+                .responseCode(200)
+                .build();
+    }
+}
