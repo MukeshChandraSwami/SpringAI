@@ -1,5 +1,6 @@
 package com.learn.search.requests;
 
+import com.learn.search.constants.ResourceTypes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,5 +21,6 @@ import java.util.UUID;
 public class CreateSearchDataRequest {
 
     private UUID resourceId;
+    private ResourceTypes resourceType;
     private String content;
 }

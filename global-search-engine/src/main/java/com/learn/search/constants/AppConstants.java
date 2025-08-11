@@ -9,4 +9,8 @@ public class AppConstants {
         public static final String ACT_ID = "/{acct_id}";
         public static final String SEARCH = "/search";
     }
+
+    public static class Profiles {
+        public static final String PG = "pg";
+    }
 }

@@ -19,5 +19,5 @@ import lombok.ToString;
 public class GlobalSearchRequest {
 
     private String query;
-    private ResourceTypes type;
+    private ResourceTypes resourceType;
 }

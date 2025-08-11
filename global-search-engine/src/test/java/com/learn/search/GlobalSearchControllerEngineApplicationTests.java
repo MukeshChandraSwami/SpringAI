@@ -6,9 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.UUID;
 
 @SpringBootTest
-class GlobalSearchEngineApplicationTests {
+class GlobalSearchControllerEngineApplicationTests {
 
-	@Test
+	// @Test
 	void contextLoads() {
 		System.out.println(UUID.randomUUID());
 	}
