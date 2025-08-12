@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static com.learn.search.constants.AppConstants.Profiles.PG;
-import static com.learn.search.utils.EmbeddingUtils.generateEmbedding;
 
 
 @Service
@@ -36,19 +34,18 @@ public class PgGlobalSearchService implements GlobalSearchService {
     @Override
     public CreateSearchDataResponse save(UUID acct_id, CreateSearchDataRequest request) {
 
-        ResourceDataEmbeddingsEntity savedEntity = null;
+        UUID id = UUID.randomUUID();
         try {
-            float[] embedding = generateEmbedding(embeddingsUrl, request.getContent());
             ResourceDataEmbeddingsEntity entity = ResourceDataEmbeddingsEntity.builder()
                     .accountMappingId(acct_id)
+                    .id(id)
                     .content(request.getContent())
-                    .embedding(embedding)
                     .resourceId(request.getResourceId())
                     .resourceType(request.getResourceType())
                     .build();
 
-            savedEntity = repository.save(entity);
-        } catch (IOException e) {
+            repository.save(entity);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return CreateSearchDataResponse.builder()
@@ -57,21 +54,32 @@ public class PgGlobalSearchService implements GlobalSearchService {
                 .responseCode(200)
                 .resourceId(request.getResourceId())
                 .content(request.getContent())
-                .id(savedEntity.getId())
+                .id(id)
                 .build();
     }
 
     @Override
     public SearchResponse search(UUID acct_id, GlobalSearchRequest request) {
+        List<CreateSearchDataResponse> searchDataResponses = new ArrayList<>();
         try {
-            float[] embedding = generateEmbedding(embeddingsUrl, request.getQuery());
-            String embeddingString = Arrays.toString(embedding);
-            List<ResourceDataEmbeddingsEntity> searchResult = repository.search(acct_id,
-                    request.getResourceType(), embeddingString, 100);
-            System.out.println(searchResult);
-        } catch (IOException e) {
+            List<ResourceDataEmbeddingsEntity> search = repository.search(acct_id, request, 100);
+            search.forEach(entity -> {
+                CreateSearchDataResponse data = CreateSearchDataResponse.builder()
+                        .id(entity.getId())
+                        .resourceId(entity.getResourceId())
+                        .content(entity.getContent())
+                        .resourceType(entity.getResourceType())
+                        .build();
+                searchDataResponses.add(data);
+            });
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return SearchResponse.builder()
+                .success(true)
+                .responseMsg("Searched Data for query:- " + request.getQuery())
+                .responseCode(200)
+                .searchResponses(searchDataResponses)
+                .build();
     }
 }

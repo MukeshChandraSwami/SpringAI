@@ -38,12 +38,6 @@ public class GlobalSearchController {
     @PostMapping(SEARCH)
     public Response search(@PathVariable UUID acct_id,
                            @RequestBody GlobalSearchRequest request) {
-        searchService.search(acct_id, request);
-
-        return SearchResponse.builder()
-                .success(true)
-                .responseMsg("Searched Data for query:- " + request.getQuery())
-                .responseCode(200)
-                .build();
+        return searchService.search(acct_id, request);
     }
 }
