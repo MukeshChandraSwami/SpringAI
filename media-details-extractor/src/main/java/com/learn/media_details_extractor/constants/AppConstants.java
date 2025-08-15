@@ -6,6 +6,7 @@ public class AppConstants {
 
         public static final String STATUS = "/status";
         public static final String MEDIA = "/media";
+        public static final String OPEN_AI = "/openai";
         public static final String VERSION = "/v1";
     }
 

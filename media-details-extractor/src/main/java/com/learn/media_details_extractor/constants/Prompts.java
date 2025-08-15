@@ -11,7 +11,7 @@ public class Prompts {
             2. Objects and Items: List all visible objects, items, animals, or people, including approximate quantity, positions, and descriptions.
             3. Text: Extract any text visible in the image. Provide the text and its position/context if possible.
             4. Background and Environment: Describe the setting, location, weather, lighting, time of day, and other environmental elements.
-            5. Colors and Textures: Note the dominant and secondary colors, as well as any unique textures or material surfaces.
+            5. Colors and Textures: Note the dominant and secondary colors, as well as any unique textures or material surfaces. Provide the name of colors like "red", "blue", etc.".
             6. Scene Type and Activity: Identify what kind of scene this is (e.g., indoor/outdoor, urban/rural, professional/casual), and describe any activities or events taking place.
             7. Style or Aesthetic: Mention the image style (e.g., photo, sketch, 3D render, vintage, cartoon) and emotional tone or mood.
             8. Possible Tags or Keywords: Generate a list of descriptive keywords and tags that can help in searching for this image later.

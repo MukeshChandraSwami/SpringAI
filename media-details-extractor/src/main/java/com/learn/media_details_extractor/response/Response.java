@@ -6,7 +6,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-public abstract class Response {
+public class Response {
 
     private boolean success;
     private String responseMsg;
