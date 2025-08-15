@@ -14,7 +14,9 @@ public class AppConstants {
         public static final String PG = "pgopenai";
     }
 
-    public static class MetadataConstants {
+    public static class VectorStoreConstants {
+        public static final double SIMILARITY_THRESHOLD = 0.80;
+
         public static final String RESOURCE_ID = "resource_id";
         public static final String RESOURCE_TYPE = "resource_type";
         public static final String ACCOUNT_MAPPING_ID = "account_mapping_id";

@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.learn.search.constants.AppConstants.MetadataConstants.ACCOUNT_MAPPING_ID;
-import static com.learn.search.constants.AppConstants.MetadataConstants.RESOURCE_ID;
-import static com.learn.search.constants.AppConstants.MetadataConstants.RESOURCE_TYPE;
+import static com.learn.search.constants.AppConstants.VectorStoreConstants.ACCOUNT_MAPPING_ID;
+import static com.learn.search.constants.AppConstants.VectorStoreConstants.RESOURCE_ID;
+import static com.learn.search.constants.AppConstants.VectorStoreConstants.RESOURCE_TYPE;
+import static com.learn.search.constants.AppConstants.VectorStoreConstants.SIMILARITY_THRESHOLD;
 
 
 @Repository
@@ -46,7 +47,7 @@ public class PgGlobalSearchRepository {
         List<Document> documents = pgVectorStore.similaritySearch(SearchRequest.builder()
                 .query(request.getQuery())
                 .topK(limit)
-                .similarityThreshold(0.75)
+                .similarityThreshold(SIMILARITY_THRESHOLD)
                 .filterExpression(filterExpressionBuilder.and(
                         filterExpressionBuilder.eq(ACCOUNT_MAPPING_ID, acctId.toString()),
                         filterExpressionBuilder.eq(RESOURCE_TYPE, request.getResourceType().getValue())

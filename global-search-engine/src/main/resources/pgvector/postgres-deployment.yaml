@@ -51,3 +51,4 @@ spec:
 # kubectl get nodes
 # kubectl apply -f src/main/resources/pgvector/postgres-deployment.yaml
 # kubectl port-forward --namespace postgres svc/pg-vector-postgres 5432:5432
+# nohup kubectl port-forward --namespace postgres svc/pg-vector-postgres 5432:5432 > port-forward.log 2>&1 &
