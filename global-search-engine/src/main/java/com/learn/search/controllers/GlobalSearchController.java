@@ -3,7 +3,6 @@ package com.learn.search.controllers;
 import com.learn.search.requests.CreateSearchDataRequest;
 import com.learn.search.requests.GlobalSearchRequest;
 import com.learn.search.response.Response;
-import com.learn.search.response.SearchResponse;
 import com.learn.search.services.GlobalSearchService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
