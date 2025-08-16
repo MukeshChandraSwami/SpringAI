@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.learn.media_details_extractor.constants.AppConstants.RoutingConstants.MEDIA;
-import static com.learn.media_details_extractor.constants.AppConstants.RoutingConstants.VERSION;
 
 @RestController
-@RequestMapping(VERSION + MEDIA)
+@RequestMapping(MEDIA)
 public class MediaController {
 
     private final MediaService mediaService;
