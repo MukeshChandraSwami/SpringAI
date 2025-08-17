@@ -31,7 +31,7 @@ CREATE TABLE resource_data_embeddings (
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     content TEXT NOT null,
     metadata json,
-    embedding vector(1536), -- because gte-small produces 384-d vectors
+    embedding vector(3072),
     created_at TIMESTAMP DEFAULT NOW()
 );
 
