@@ -1,6 +1,6 @@
 package com.learn.search.controllers;
 
-import com.learn.search.requests.CreateSearchDataRequest;
+import com.learn.search.requests.EmbeddingRequest;
 import com.learn.search.requests.GlobalSearchRequest;
 import com.learn.search.response.Response;
 import com.learn.search.services.GlobalSearchService;
@@ -29,7 +29,7 @@ public class GlobalSearchController {
     @PostMapping
     public Response createSearchData(
             @PathVariable UUID acct_id,
-            @RequestBody CreateSearchDataRequest request) {
+            @RequestBody EmbeddingRequest request) {
 
         return searchService.save(acct_id, request);
     }

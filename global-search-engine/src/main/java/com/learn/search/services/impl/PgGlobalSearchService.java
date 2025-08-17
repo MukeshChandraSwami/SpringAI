@@ -1,10 +1,11 @@
 package com.learn.search.services.impl;
 
 import com.learn.search.entities.ResourceDataEmbeddingsEntity;
+import com.learn.search.models.SearchResult;
 import com.learn.search.repositories.PgGlobalSearchRepository;
-import com.learn.search.requests.CreateSearchDataRequest;
+import com.learn.search.requests.EmbeddingRequest;
 import com.learn.search.requests.GlobalSearchRequest;
-import com.learn.search.response.CreateSearchDataResponse;
+import com.learn.search.response.EmbeddingResponse;
 import com.learn.search.response.SearchResponse;
 import com.learn.search.services.GlobalSearchService;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class PgGlobalSearchService implements GlobalSearchService {
     }
 
     @Override
-    public CreateSearchDataResponse save(UUID acct_id, CreateSearchDataRequest request) {
+    public EmbeddingResponse save(UUID acct_id, EmbeddingRequest request) {
 
         UUID id = UUID.randomUUID();
         try {
@@ -48,23 +49,24 @@ public class PgGlobalSearchService implements GlobalSearchService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return CreateSearchDataResponse.builder()
+        return EmbeddingResponse.builder()
                 .success(true)
                 .responseMsg("Data Saved")
                 .responseCode(200)
                 .resourceId(request.getResourceId())
                 .content(request.getContent())
+                .resourceType(request.getResourceType())
                 .id(id)
                 .build();
     }
 
     @Override
     public SearchResponse search(UUID acct_id, GlobalSearchRequest request) {
-        List<CreateSearchDataResponse> searchDataResponses = new ArrayList<>();
+        List<SearchResult> searchDataResponses = new ArrayList<>();
         try {
             List<ResourceDataEmbeddingsEntity> search = repository.search(acct_id, request, 100);
             search.forEach(entity -> {
-                CreateSearchDataResponse data = CreateSearchDataResponse.builder()
+                SearchResult data = SearchResult.builder()
                         .id(entity.getId())
                         .resourceId(entity.getResourceId())
                         .content(entity.getContent())

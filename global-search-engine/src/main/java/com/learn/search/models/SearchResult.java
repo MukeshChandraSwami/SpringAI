@@ -1,8 +1,8 @@
-package com.learn.search.requests;
+package com.learn.search.models;
 
 import com.learn.search.constants.ResourceTypes;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,16 +11,17 @@ import lombok.ToString;
 
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @EqualsAndHashCode
-public class CreateSearchDataRequest {
+@ToString
+@Builder
+public class SearchResult {
 
+    private UUID id;
     private UUID resourceId;
-    private ResourceTypes resourceType;
     private String content;
+    private ResourceTypes resourceType;
 }

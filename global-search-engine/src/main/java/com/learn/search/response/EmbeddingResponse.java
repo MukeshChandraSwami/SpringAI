@@ -10,7 +10,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
-public class CreateSearchDataResponse extends Response {
+public class EmbeddingResponse extends Response {
 
     private UUID id;
     private UUID resourceId;
