@@ -44,7 +44,7 @@ public class OpenAiMediaService implements MediaService {
                 .entity(ImageAnalysis.class);
 
         return MediaResponse.builder()
-                .success(false)
+                .success(true)
                 .responseCode(200)
                 .responseMsg("Media details extraction not implemented for this service")
                 .imageAnalysis(imageData)
