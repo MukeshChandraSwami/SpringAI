@@ -1,4 +1,4 @@
-package com.learn.search.response;
+package com.learn.media_generator.response;
 
 
 import lombok.Data;
