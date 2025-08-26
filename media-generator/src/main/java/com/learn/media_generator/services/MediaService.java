@@ -1,9 +1,11 @@
 package com.learn.media_generator.services;
 
 import com.learn.media_generator.constants.Prompts;
+import com.learn.media_generator.entities.MediaPost;
+import com.learn.media_generator.repository.MediaRepository;
 import com.learn.media_generator.requests.MediaRequest;
-import com.learn.media_generator.response.ImageGenerationResponse;
-import com.learn.media_generator.response.ImageGenerationResponse.MediaDetailsResponse;
+import com.learn.media_generator.response.MediaResponse;
+import com.learn.media_generator.response.MediaResponse.MediaDetailsResponse;
 import com.learn.media_generator.response.Response;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.openai.OpenAiImageModel;
@@ -15,26 +17,30 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import static com.learn.media_generator.utils.FileUtils.uploadFile;
 
 @Service
 public class MediaService {
 
+    private final MediaRepository mediaRepository;
     private final OpenAiImageModel imageModel;
     private final String uploadDir;
     private final String host;
 
-    public MediaService(OpenAiImageModel imageModel,
+    public MediaService(MediaRepository mediaRepository,
+                        OpenAiImageModel imageModel,
                         @Value("${file.upload-dir}") String uploadDir,
                         @Value("${server.port}") String port,
-                        @Value("${server.servlet.context-path") String contextPath) {
+                        @Value("${server.servlet.context-path}") String contextPath) {
+        this.mediaRepository = mediaRepository;
         this.imageModel = imageModel;
         this.uploadDir = uploadDir;
         this.host = "http://localhost:" + port + contextPath;
     }
 
-    public Response generateMedia(MediaRequest request) {
+    public Response generateMedia(MediaRequest request, UUID acctId) {
 
         List<MediaDetailsResponse> result = request.getMediaDetails()
                 .stream()
@@ -43,7 +49,7 @@ public class MediaService {
                     OpenAiImageOptions imageOptions = OpenAiImageOptions.builder()
                             .model("gpt-image-1")
                             .N(2)
-                            .quality("high")
+                            .quality("medium")
                             .width(mediaDetail.getWidth() > 0 ? mediaDetail.getWidth() : 1024)
                             .height(mediaDetail.getHeight() > 0 ? mediaDetail.getHeight() : 1024)
                             .build();
@@ -56,7 +62,8 @@ public class MediaService {
                                     byte[] imageData = Base64.getDecoder().decode(img.getOutput().getB64Json());
                                     String url = uploadFile(imageData, uploadDir,
                                             mediaDetail.getId() + "." + mediaDetail.getFormat().getFormat());
-                                    return new MediaDetailsResponse(mediaDetail.getId(), host + url, url);
+                                    MediaPost savedPost = save(mediaDetail, acctId, url);
+                                    return new MediaDetailsResponse(savedPost.getId(), mediaDetail.getId(), this.host + url, url);
                                 } catch (IOException e) {
                                     System.out.println("Failed to upload file: " + e.getMessage());
                                     return null;
@@ -67,11 +74,35 @@ public class MediaService {
                 .toList();
 
 
-        return ImageGenerationResponse.builder()
+
+        return MediaResponse.builder()
                 .success(true)
                 .responseCode(200)
                 .responseMsg("Media generated successfully")
-                .generatedImages(result)
+                .mediaDetails(result)
                 .build();
+    }
+
+    public Response getAllMediaPosts(UUID acctId, UUID eventId) {
+        List<MediaPost> mediaPosts = mediaRepository.findByAccountMappingIdAndEventId(acctId, eventId);
+        List<MediaDetailsResponse> result = mediaPosts.stream()
+                .map(post -> new MediaDetailsResponse(post.getId(), post.getResourceId(), this.host + post.getUrl(), post.getUrl()))
+                .toList();
+
+        return MediaResponse.builder()
+                .success(true)
+                .responseCode(200)
+                .responseMsg("Media generated successfully")
+                .mediaDetails(result)
+                .build();
+    }
+
+    private MediaPost save(MediaRequest.MediaDetails mediaDetail, UUID acctId, String url) {
+        MediaPost mediaPost = new MediaPost();
+        mediaPost.setUrl(url);
+        mediaPost.setEventId(mediaDetail.getEventId());
+        mediaPost.setAccountMappingId(acctId);
+        mediaPost.setResourceId(mediaDetail.getId());
+        return mediaRepository.save(mediaPost);
     }
 }

@@ -24,6 +24,7 @@ public class MediaRequest {
     @Setter
     public static class MediaDetails {
         private UUID id;
+        private UUID eventId;
         private String title;
         private String description;
         private String eventDateAndTime;
