@@ -18,6 +18,7 @@ public class HealthController {
         return HealthResponse.builder()
                 .success(true)
                 .responseCode(200)
+                .responseMsg("Successfully fetched the status of Media Generator Service")
                 .status("Media Generator Service is UP & Running")
                 .build();
     }
