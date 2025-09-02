@@ -49,7 +49,7 @@ public class MediaService {
                     OpenAiImageOptions imageOptions = OpenAiImageOptions.builder()
                             .model("gpt-image-1")
                             .N(2)
-                            .quality("medium")
+                            .quality("high")
                             .width(mediaDetail.getWidth() > 0 ? mediaDetail.getWidth() : 1024)
                             .height(mediaDetail.getHeight() > 0 ? mediaDetail.getHeight() : 1024)
                             .build();

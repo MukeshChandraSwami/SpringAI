@@ -32,6 +32,7 @@ public class MediaRequest {
         private String audience; // Professionals, Students, Entrepreneurs, Doctors, etc.
         private MediaType mediaType; // Image, Video, Audio
         private EventType eventType; // Meeting, Webinar, Workshop, Conference
+        private EventStatus eventStatus;
         private String registrationLink;
         private String demography;
         private String socialMediaPlatform; // Instagram, Facebook, LinkedIn, Twitter
@@ -76,6 +77,21 @@ public class MediaRequest {
         private final String type;
 
         EventType(String type) {
+            this.type = type;
+        }
+    }
+
+    @Getter
+    public enum EventStatus {
+        PENDING("pending"),
+        ACTIVE("active"),
+        COMPLETED("completed"),
+        CLOSED("closed"),
+        CANCELLED("cancelled");
+
+        private final String type;
+
+        EventStatus(String type) {
             this.type = type;
         }
     }
