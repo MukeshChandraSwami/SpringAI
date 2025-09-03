@@ -26,5 +26,6 @@ public class MarketingContent {
         private String title;
         private String description;
         private String dateAndTimeToPost;
+        private List<String> posts;
     }
 }

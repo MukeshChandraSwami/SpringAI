@@ -6,6 +6,7 @@ import com.learn.event_marketing.models.MarketingContent;
 import com.learn.event_marketing.repository.MarketingContentRepository;
 import com.learn.event_marketing.requests.GenerateMarketingContentRequest;
 import com.learn.event_marketing.response.EventMarketingResponse;
+import com.learn.event_marketing.response.MediaResponse;
 import com.learn.event_marketing.response.Response;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,13 @@ import static com.learn.event_marketing.constants.Prompts.getFormattedPrompt;
 public class MarketingContentService {
 
     private final ChatClient chatClient;
+    private final MediaGenerationService mediaGenerationService;
     private final MarketingContentRepository marketingContentRepository;
 
-    public MarketingContentService(ChatClient chatClient,
+    public MarketingContentService(ChatClient chatClient, MediaGenerationService mediaGenerationService,
             MarketingContentRepository marketingContentRepository) {
         this.chatClient = chatClient;
+        this.mediaGenerationService = mediaGenerationService;
         this.marketingContentRepository = marketingContentRepository;
     }
 
@@ -40,20 +43,23 @@ public class MarketingContentService {
 
         MarketingContentEntity savedEntity = marketingContentRepository.save(getmarketingContentEntity(acct_id, request, marketingContent));
 
+        new Thread(() -> mediaGenerationService.generateMediaForMarketingContent(acct_id, request, getPostsForMediaGeneration(savedEntity))).start();
+
         return EventMarketingResponse.builder()
                 .success(true)
                 .responseCode(200)
-                .marketingContent(toMarketingContent(savedEntity))
+                .marketingContent(toMarketingContent(savedEntity, null))
                 .responseMsg("Marketing content generated successfully")
                 .build();
     }
 
     public Response getAllMarketingContents(UUID acct_id, UUID event_id) {
         MarketingContentEntity marketingContentEntity = marketingContentRepository.findByAccountMappingIdAndEventId(acct_id, event_id);
+        MediaResponse postsForMarketingContent = mediaGenerationService.getSocialMediaPostsForMarketingContent(acct_id, event_id);
         return EventMarketingResponse.builder()
                 .success(true)
                 .responseCode(200)
-                .marketingContent(toMarketingContent(marketingContentEntity))
+                .marketingContent(toMarketingContent(marketingContentEntity, postsForMarketingContent))
                 .responseMsg("Marketing contents fetched successfully")
                 .build();
     }
@@ -83,7 +89,14 @@ public class MarketingContentService {
         return entity;
     }
 
-    public MarketingContent toMarketingContent(MarketingContentEntity entity) {
+    private List<ChannelContentEntity> getPostsForMediaGeneration(MarketingContentEntity marketingContentEntity) {
+
+        return marketingContentEntity.getChannelContent().stream()
+                .filter(c -> c.getChannelName().equalsIgnoreCase("LinkedIn"))
+                .toList();
+    }
+
+    private MarketingContent toMarketingContent(MarketingContentEntity entity, MediaResponse postsForMarketingContent) {
         MarketingContent marketingContent = new MarketingContent();
         marketingContent.setEventTitle(entity.getEventTitle());
         marketingContent.setEventDescription(entity.getEventDescription());
@@ -97,6 +110,14 @@ public class MarketingContentService {
             content.setTitle(channelEntity.getTitle());
             content.setDescription(channelEntity.getDescription());
             content.setDateAndTimeToPost(channelEntity.getDateAndTimeToPost());
+
+            if (postsForMarketingContent != null) {
+                List<String> mediaUrls = postsForMarketingContent.getMediaDetails().stream()
+                        .filter(media -> media.getResourceId().equals(channelEntity.getId()))
+                        .map(MediaResponse.MediaDetailsResponse::getUrl)
+                        .toList();
+                content.setPosts(mediaUrls);
+            }
 
             channelContentMap
                     .computeIfAbsent(channelEntity.getChannelName(), k -> new ArrayList<>())

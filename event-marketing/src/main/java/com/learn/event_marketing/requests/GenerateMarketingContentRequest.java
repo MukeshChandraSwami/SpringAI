@@ -43,6 +43,15 @@ public class GenerateMarketingContentRequest {
         EventStatus(String type) {
             this.type = type;
         }
+
+        public static EventStatus fromValue(String value) {
+            for (EventStatus type : EventStatus.values()) {
+                if (type.type.equalsIgnoreCase(value)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("No enum constant with value: " + value);
+        }
     }
 
     @Getter
@@ -56,6 +65,15 @@ public class GenerateMarketingContentRequest {
 
         EventType(String type) {
             this.type = type;
+        }
+
+        public static EventType fromValue(String value) {
+            for (EventType type : EventType.values()) {
+                if (type.type.equalsIgnoreCase(value)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("No enum constant with value: " + value);
         }
     }
 }
