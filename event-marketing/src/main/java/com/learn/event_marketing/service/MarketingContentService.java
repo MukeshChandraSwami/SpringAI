@@ -10,6 +10,10 @@ import com.learn.event_marketing.response.Response;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.learn.event_marketing.constants.Prompts.getFormattedPrompt;
@@ -39,8 +43,18 @@ public class MarketingContentService {
         return EventMarketingResponse.builder()
                 .success(true)
                 .responseCode(200)
-                .marketingContent(marketingContent)
+                .marketingContent(toMarketingContent(savedEntity))
                 .responseMsg("Marketing content generated successfully")
+                .build();
+    }
+
+    public Response getAllMarketingContents(UUID acct_id, UUID event_id) {
+        MarketingContentEntity marketingContentEntity = marketingContentRepository.findByAccountMappingIdAndEventId(acct_id, event_id);
+        return EventMarketingResponse.builder()
+                .success(true)
+                .responseCode(200)
+                .marketingContent(toMarketingContent(marketingContentEntity))
+                .responseMsg("Marketing contents fetched successfully")
                 .build();
     }
 
@@ -67,5 +81,29 @@ public class MarketingContentService {
         });
 
         return entity;
+    }
+
+    public MarketingContent toMarketingContent(MarketingContentEntity entity) {
+        MarketingContent marketingContent = new MarketingContent();
+        marketingContent.setEventTitle(entity.getEventTitle());
+        marketingContent.setEventDescription(entity.getEventDescription());
+        marketingContent.setSeoKeywordsAndDescription(entity.getSeoKeywordsAndDescription());
+
+        // Assuming getChannelContent() returns a List<ChannelContentEntity>
+        Map<String, List<MarketingContent.Content>> channelContentMap = new HashMap<>();
+        for (ChannelContentEntity channelEntity : entity.getChannelContent()) {
+            MarketingContent.Content content = new MarketingContent.Content();
+            content.setId(channelEntity.getId());
+            content.setTitle(channelEntity.getTitle());
+            content.setDescription(channelEntity.getDescription());
+            content.setDateAndTimeToPost(channelEntity.getDateAndTimeToPost());
+
+            channelContentMap
+                    .computeIfAbsent(channelEntity.getChannelName(), k -> new ArrayList<>())
+                    .add(content);
+        }
+        marketingContent.setChannelContent(channelContentMap);
+
+        return marketingContent;
     }
 }

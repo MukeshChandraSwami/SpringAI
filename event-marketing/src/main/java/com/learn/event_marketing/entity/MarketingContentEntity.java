@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -48,7 +47,6 @@ public class MarketingContentEntity {
     @Column(name = "event_title", nullable = false)
     private String eventTitle;
 
-    @Lob
     @Column(name = "event_description", nullable = false, columnDefinition = "TEXT")
     private String eventDescription;
 
