@@ -3,10 +3,13 @@ package com.learn.event_marketing.controllers;
 import com.learn.event_marketing.requests.GenerateMarketingContentRequest;
 import com.learn.event_marketing.response.Response;
 import com.learn.event_marketing.service.MarketingContentService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 import static com.learn.event_marketing.constants.AppConstants.RoutingConstants.ACT;
 import static com.learn.event_marketing.constants.AppConstants.RoutingConstants.ACT_ID;
@@ -22,8 +25,9 @@ public class MarketingContentController {
     }
 
     @PostMapping
-    public Response generateMarketingContent(@RequestBody GenerateMarketingContentRequest request) {
+    public Response generateMarketingContent(@PathVariable UUID acct_id,
+            @RequestBody GenerateMarketingContentRequest request) {
 
-        return this.marketingContentService.generateContent(request);
+        return this.marketingContentService.generateContent(acct_id, request);
     }
 }
