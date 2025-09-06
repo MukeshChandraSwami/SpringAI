@@ -10,8 +10,15 @@ import static com.learn.event_marketing.constants.Prompts.MARKETING_SYSTEM_PROMP
 @Configuration
 public class ChatClientConfigs {
 
-    @Bean
-    public ChatClient openAiChatClient(OpenAiChatModel chatModel) {
+    @Bean("marketing-chat-client")
+    public ChatClient openAiMarketingChatClient(OpenAiChatModel chatModel) {
+        return ChatClient.builder(chatModel)
+                .defaultSystem(MARKETING_SYSTEM_PROMPT)
+                .build();
+    }
+
+    @Bean("personalized-media-post-chat-client")
+    public ChatClient openAiPersonalizedPostChatClient(OpenAiChatModel chatModel) {
         return ChatClient.builder(chatModel)
                 .defaultSystem(MARKETING_SYSTEM_PROMPT)
                 .build();

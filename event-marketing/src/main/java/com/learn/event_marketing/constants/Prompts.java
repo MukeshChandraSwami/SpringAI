@@ -1,6 +1,10 @@
 package com.learn.event_marketing.constants;
 
 import com.learn.event_marketing.requests.GenerateMarketingContentRequest;
+import com.learn.event_marketing.requests.PersonalizedPostRequest;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 public class Prompts {
 
@@ -85,9 +89,119 @@ public class Prompts {
             Based on these details, create a complete marketing promotion plan.
             """;
 
+    public static final String PERSONALIZED_POST_SYSTEM_PROMPT = """
+            You are an AI assistant that generates engaging, personalized social media posts for events.
+            
+            ### Guidelines:
+            1. Posts must always be written in a human-like, natural tone.
+            2. Adapt the writing style based on the social media channel:
+               - LinkedIn → professional, inspiring, industry-focused. Include relevant hashtags and a clear call-to-action (e.g., “Join us”, “Don’t miss it”).
+               - Twitter → short, catchy, conversational. Use trending hashtags and abbreviations where appropriate. Limit to concise statements that spark engagement.
+               - Instagram → casual, vibrant, visually engaging. Use emojis and community-driven language. Include 3–5 fun or trending hashtags.
+               - Facebook → friendly, approachable, and community-oriented. Slightly longer than Twitter, but more relaxed than LinkedIn. Encourage comments, likes, and shares.
+            
+            3. Personalization:
+               - Use the attendee’s name, designation, and company naturally.
+               - If the attendee is a **Speaker**, highlight their role and the sessions they are speaking at.
+               - If the attendee is an **Attendee**, highlight what they are looking forward to, learning opportunities, and networking, etc.
+            
+            4. Session handling:
+               - For a **Speaker**, only mention the sessions they are speaking at (ignore the speaker details in the session object).
+               - For an **Attendee**, mention notable sessions they are attending and optionally highlight speakers.
+               - If no sessions are provided, focus on the overall event experience.
+            
+            5. Output format:
+               - Provide 2 post variations per request.
+               - Posts should feel ready-to-publish.
+            
+            ### Input:
+            - Event details (id, title, description, date/time)
+            - Attendee profile (name, photo URL, designation, company, type: SPEAKER/ATTENDEE)
+            - Sessions (title, description, optional speaker info)
+            - Social media details (channel, tone)
+            
+            ### Output:
+            - Generate 2 social media post variations that fit the channel style, the attendee role, and the requested tone.
+            - You must always respond in the following exact JSON structure, do not add any other field event if it is present in the java POJO:
+            
+            {
+                "posts": [
+                    {
+                        "title": "Catchy one-liner title (≤20 words)",
+                        "description": "Detailed, engaging post description, Use proper grammar, punctuation, and spelling",
+                        "imageSuggestion": "Brief description of an image that would complement the post"
+                    }
+                ]
+            }
+            """;
+
+    public static final String PERSONALIZED_POST_USER_PROMPT = """
+            I am attending the event as %s and would like you to help me create personalized social media posts for the following event and attendee details:
+            
+            Event details:
+            - Title: %s
+            - Description: %s
+            - Date and Time: %s
+            
+            Attendee details:
+            - Name: %s
+            - Designation: %s
+            - Company: %s
+            
+            - Sessions:
+              %s
+            
+            - Social Media Channel: %s
+            
+            Generate 2 engaging post variations tailored to the attendee's role and the specified social media channel.
+            """;
+
+
     public static String getFormattedPrompt(GenerateMarketingContentRequest request) {
         return MARKETING_USER_PROMPT.formatted(request.getTitle(), request.getDescription(), request.getEventDateAndTime(),
                 request.getIndustryType(), request.getEventType().getType(), request.getEventStatus().getType(),
                 request.getAudience(), request.getDemography(), request.getBudget());
+    }
+
+    public static String getFormattedPrompt(PersonalizedPostRequest request) {
+        String sessionsInfo = formatedSessions(request.getSessions());
+        return PERSONALIZED_POST_USER_PROMPT.formatted(request.getAttendeeProfile().getAttendeeType().getType(),
+                request.getTitle(), request.getDescription(), request.getEventDateAndTime(),
+                request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(),
+                request.getAttendeeProfile().getDesignation(), request.getAttendeeProfile().getCompanyName(),
+                sessionsInfo, request.getSocialMediaChannel().getType());
+    }
+
+    /**
+     * Formats a list of Sessions into a string with each session's title and description.
+     * Example output:
+     * - Title: Building Trust in Network Marketing
+     *   Description: How to build authentic relationships and credibility in the industry.
+     *
+     * @param sessions List of PersonalizedPostRequest.Sessions
+     * @return formatted string
+     */
+    public static String formatedSessions(List<PersonalizedPostRequest.Sessions> sessions) {
+        if (sessions == null || sessions.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (PersonalizedPostRequest.Sessions session : sessions) {
+            sb.append("- Title: ")
+                    .append(session.getSessionTitle() != null ? session.getSessionTitle() : "")
+                    .append("  \n  Description: ")
+                    .append(session.getSessionDescription() != null ? session.getSessionDescription() : "");
+
+            if (!StringUtils.isEmpty(session.getSpeakerName())) {
+                sb.append("  \n  Speaker Name: ").append(session.getSpeakerName());
+            }
+
+            if (!StringUtils.isEmpty(session.getSpeakerDetails())) {
+                sb.append("  \n  Speaker Bio: ").append(session.getSpeakerDetails());
+            }
+
+            sb.append("  \n\n");
+        }
+        return sb.toString().trim();
     }
 }

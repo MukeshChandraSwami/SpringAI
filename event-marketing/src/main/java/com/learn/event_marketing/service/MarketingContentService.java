@@ -9,6 +9,7 @@ import com.learn.event_marketing.response.EventMarketingResponse;
 import com.learn.event_marketing.response.MediaResponse;
 import com.learn.event_marketing.response.Response;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class MarketingContentService {
     private final MediaGenerationService mediaGenerationService;
     private final MarketingContentRepository marketingContentRepository;
 
-    public MarketingContentService(ChatClient chatClient, MediaGenerationService mediaGenerationService,
+    public MarketingContentService(@Qualifier("marketing-chat-client") ChatClient chatClient,
+                                   MediaGenerationService mediaGenerationService,
             MarketingContentRepository marketingContentRepository) {
         this.chatClient = chatClient;
         this.mediaGenerationService = mediaGenerationService;
