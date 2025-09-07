@@ -21,7 +21,7 @@ import static com.learn.event_marketing.constants.AppConstants.RoutingConstants.
 import static com.learn.event_marketing.constants.AppConstants.RoutingConstants.POST;
 
 @RestController
-@RequestMapping(ACT + ACT_ID + POST)
+@RequestMapping(ACT + ACT_ID)
 public class PersonalizedPostController {
 
     private PersonalizedPostService personalizedPostService;
@@ -30,14 +30,14 @@ public class PersonalizedPostController {
         this.personalizedPostService = personalizedPostService;
     }
 
-    @PostMapping
+    @PostMapping(POST)
     public Response generatePersonalizedPostContent(@PathVariable UUID acct_id,
                                              @RequestBody PersonalizedPostRequest request) {
 
         return this.personalizedPostService.generatePersonalizedPostContent(acct_id, request);
     }
 
-    @GetMapping(EVENT + EVENT_ID + ATTENDE + ATTENDE_ID)
+    @GetMapping(EVENT + EVENT_ID + ATTENDE + ATTENDE_ID + POST)
     public Response getPersonalizedPostContent(@PathVariable UUID acct_id, @PathVariable UUID event_id,
                                                @PathVariable UUID attendee_id) {
         return this.personalizedPostService.getAllPersonalizedPosts(acct_id, event_id, attendee_id);

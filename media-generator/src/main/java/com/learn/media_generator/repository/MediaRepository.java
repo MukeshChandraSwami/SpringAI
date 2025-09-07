@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface MediaRepository extends JpaRepository<MediaPost, UUID> {
 
     List<MediaPost> findByAccountMappingIdAndEventId(UUID accountMappingId, UUID eventId);
+
+    List<MediaPost> findByAccountMappingIdAndEventIdAndAttendeeId(UUID accountMappingId, UUID eventId, UUID attendeeId);
 }

@@ -34,6 +34,9 @@ public class MediaPost {
     @Column(name = "event_id", nullable = false)
     private UUID eventId;
 
+    @Column(name = "attendee_id")
+    private UUID attendeeId;
+
     @Column(name = "url", nullable = false)
     private String url;
 

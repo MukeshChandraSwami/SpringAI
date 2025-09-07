@@ -1,6 +1,8 @@
 package com.learn.media_generator.constants;
 
 import com.learn.media_generator.requests.MediaRequest.MediaDetails;
+import com.learn.media_generator.requests.PersonalizedPostRequest;
+import com.learn.media_generator.requests.PersonalizedPostRequest.PostDetails;
 
 public class Prompts {
 
@@ -40,6 +42,47 @@ public class Prompts {
             13. Avoid using any copyrighted material or logos unless explicitly provided.
             14. Ensure the image should reflect the event status (e.g., upcoming, active, completed).
             """;
+    
+    public static final String PERSONALIZED_POST_PROMPT = """
+            You are an AI assistant that generates social media-ready event images.
+            I am attending the event as %s and would like you to create a high-quality, visually engaging image personalized for the given attendee and event.
+            
+            Event details:
+            - Title: %s
+            - Description: %s
+            - Date and Time: %s
+            
+            Attendee details:
+            - Name: %s
+            - Designation: %s
+            - Company: %s
+            
+            - Social Media Channel: %s
+            
+            ### Image Generation Guidelines:
+            1. Event branding:
+               - Display the event title and date clearly.
+               - Optionally include a short tagline or phrase from the event description.
+               - Use the event’s theme or domain (e.g., technology, healthcare, marketing, leadership) as inspiration for background visuals.
+            
+            2. Attendee personalization:
+               - Always include attendee’s full name, designation, and company.
+               - Apply the runtime personalization details → %s
+            
+            3. Channel-specific adaptation:
+               - LinkedIn → professional, sleek, corporate look with muted tones.
+               - Twitter → bold, minimal, strong typography.
+               - Instagram → colorful, vibrant, playful, visually dynamic.
+               - Facebook → approachable, community-focused, warm design.
+            
+            4. Optional common enhancements:
+               - If attendee’s photo URL is available, integrate it seamlessly into the design.
+               - If no photo is available, generate a polished template that still highlights their details.
+            
+            5. Output:
+               - Generate a polished event image that feels professional and social-media ready.
+               - Do not include any explanatory text outside of the designed content.
+            """;
 
     public static String getFormattedPrompt(MediaDetails request) {
         return MEDIA_GENERATOR_PROMPT.formatted(request.getTitle(), request.getDescription(),
@@ -48,5 +91,13 @@ public class Prompts {
                 request.getDemography(), request.getAudience(),
                 request.getSocialMediaPlatform(), request.getSocialMediaPostTitle(),
                 request.getSocialMediaPostContent());
+    }
+
+    public static String getFormattedPrompt(PersonalizedPostRequest request, PostDetails post) {
+        return PERSONALIZED_POST_PROMPT.formatted(request.getAttendeeProfile().getAttendeeType(),
+                request.getTitle(), request.getDescription(), request.getEventDateAndTime(),
+                request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(),
+                request.getAttendeeProfile().getDesignation(), request.getAttendeeProfile().getCompanyName(),
+                request.getSocialMediaChannel(), request.getThemingDetails());
     }
 }
