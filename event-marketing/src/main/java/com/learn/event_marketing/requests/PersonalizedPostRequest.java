@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -18,12 +19,14 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @Builder
+@NoArgsConstructor
 public class PersonalizedPostRequest {
 
     private UUID eventId;
     private String title;
     private String description;
     private String eventDateAndTime;
+    private String themingDetails;
     private AttendeeProfile attendeeProfile;
     private SocialMediaChannel socialMediaChannel;
 

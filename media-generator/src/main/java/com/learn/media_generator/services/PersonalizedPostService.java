@@ -47,7 +47,7 @@ public class PersonalizedPostService {
                 .flatMap(post -> {
                     OpenAiImageOptions imageOptions = OpenAiImageOptions.builder()
                             .model("gpt-image-1")
-                            .N(2)
+                            .N(1)
                             .quality("high")
                             .width(post.getWidth() > 0 ? post.getWidth() : 1024)
                             .height(post.getHeight() > 0 ? post.getHeight() : 1024)

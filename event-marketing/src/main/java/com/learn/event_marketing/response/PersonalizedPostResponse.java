@@ -1,6 +1,6 @@
-package com.learn.event_marketing.models;
+package com.learn.event_marketing.response;
 
-import com.learn.event_marketing.response.Response;
+import com.learn.event_marketing.models.PersonalizedPost;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
