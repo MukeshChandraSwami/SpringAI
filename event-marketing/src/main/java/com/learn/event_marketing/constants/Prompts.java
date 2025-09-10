@@ -111,8 +111,13 @@ public class Prompts {
                - If no sessions are provided, focus on the overall event experience.
             
             5. Output format:
-               - Provide 2 post variations per request.
+               - Provide 5 posts variations per request.
                - Posts should feel ready-to-publish.
+            
+            ### Must to do:
+            - Evaluate the generated posts as per the standards of the specified social media channel.
+            - Ensure the tone matches the request
+            - Ensure proper grammar, punctuation, and spelling.
             
             ### Input:
             - Event details (id, title, description, date/time)
@@ -121,7 +126,7 @@ public class Prompts {
             - Social media details (channel, tone)
             
             ### Output:
-            - Generate 2 social media post variations that fit the channel style, the attendee role, and the requested tone.
+            - Generate 5 social media post variations that fit the channel style, the attendee role, and the requested tone.
             - You must always respond in the following exact JSON structure, do not add any other field event if it is present in the java POJO:
             
             {
@@ -129,7 +134,6 @@ public class Prompts {
                     {
                         "title": "Catchy one-liner title (≤20 words)",
                         "description": "Detailed, engaging post description, Use proper grammar, punctuation, and spelling",
-                        "imageSuggestion": "Brief description of an image that would complement the post"
                     }
                 ]
             }

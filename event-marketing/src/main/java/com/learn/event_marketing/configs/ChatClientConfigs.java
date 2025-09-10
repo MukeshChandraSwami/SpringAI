@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static com.learn.event_marketing.constants.Prompts.MARKETING_SYSTEM_PROMPT;
+import static com.learn.event_marketing.constants.Prompts.PERSONALIZED_POST_SYSTEM_PROMPT;
 
 @Configuration
 public class ChatClientConfigs {
@@ -20,7 +21,7 @@ public class ChatClientConfigs {
     @Bean("personalized-media-post-chat-client")
     public ChatClient openAiPersonalizedPostChatClient(OpenAiChatModel chatModel) {
         return ChatClient.builder(chatModel)
-                .defaultSystem(MARKETING_SYSTEM_PROMPT)
+                .defaultSystem(PERSONALIZED_POST_SYSTEM_PROMPT)
                 .build();
     }
 }

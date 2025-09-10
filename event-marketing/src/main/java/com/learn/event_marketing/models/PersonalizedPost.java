@@ -25,7 +25,6 @@ public class PersonalizedPost {
     public static class Content extends ContentBase {
         private String title;
         private String description;
-        private String imageSuggestion;
     }
 
     @Getter
@@ -34,6 +33,7 @@ public class PersonalizedPost {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ContentBase {
         private UUID id;
+        private String channel;
         private List<String> imageUrls;
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.learn.event_marketing.constants.Prompts.getFormattedPrompt;
@@ -42,18 +43,18 @@ public class PersonalizedPostService {
 
         PersonalizedPostEntity savedEn = repository.save(toPersonalizedPostEntity(acct_id, request, marketingContent));
 
-        new Thread(() -> mediaGenerationService.generateMediaForPersonalizedPost(acct_id, request, savedEn)).start();
+        // new Thread(() -> mediaGenerationService.generateMediaForPersonalizedPost(acct_id, request, savedEn)).start();
 
         return PersonalizedPostResponse.builder()
                 .success(true)
                 .responseMsg("Personalized post content generated successfully")
                 .responseCode(200)
-                .personalizedPost(toPersonalizedPostResponse(savedEn, null))
+                .personalizedPost(toPersonalizedPostResponse(List.of(savedEn), null))
                 .build();
     }
 
     public Response getAllPersonalizedPosts(UUID acctId, UUID eventId, UUID attendeeId) {
-        PersonalizedPostEntity personalizedPostContent = this.repository.findByAccountMappingIdAndEventIdAndAttendeeId(acctId, eventId, attendeeId);
+        List<PersonalizedPostEntity> personalizedPostContent = this.repository.findByAccountMappingIdAndEventIdAndAttendeeId(acctId, eventId, attendeeId);
         MediaResponse personalizedPosts = this.mediaGenerationService.getAllPersonalizedPosts(acctId, eventId, attendeeId);
         return PersonalizedPostResponse.builder()
                 .success(true)
@@ -84,18 +85,20 @@ public class PersonalizedPostService {
         return entity;
     }
 
-    private PersonalizedPost toPersonalizedPostResponse(PersonalizedPostEntity entity, MediaResponse personalizedPosts) {
+    private PersonalizedPost toPersonalizedPostResponse(List<PersonalizedPostEntity> entity, MediaResponse personalizedPosts) {
         return new PersonalizedPost(
-                entity.getChannelContent().stream()
-                        .map(en -> {
+                entity.stream()
+                        .flatMap(en -> en.getChannelContent().stream())
+                        .map(c -> {
                             Content content = new Content();
-                            content.setId(en.getId());
-                            content.setTitle(en.getTitle());
-                            content.setDescription(en.getDescription());
+                            content.setId(c.getId());
+                            content.setTitle(c.getTitle());
+                            content.setDescription(c.getDescription());
+                            content.setChannel(c.getChannelName());
                             if (personalizedPosts != null) {
                                 content.setImageUrls(personalizedPosts.getMediaDetails()
                                         .stream()
-                                        .filter(md -> md.getResourceId().equals(en.getId()))
+                                        .filter(md -> md.getResourceId().equals(c.getId()))
                                         .map(MediaResponse.MediaDetailsResponse::getUrl)
                                         .toList());
                             }

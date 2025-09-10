@@ -4,10 +4,11 @@ import com.learn.event_marketing.entity.PersonalizedPostEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface PersonalizedPostRepository extends JpaRepository<PersonalizedPostEntity, UUID> {
 
-    PersonalizedPostEntity findByAccountMappingIdAndEventIdAndAttendeeId(UUID accountMappingId, UUID eventId, UUID attendeeId);
+    List<PersonalizedPostEntity> findByAccountMappingIdAndEventIdAndAttendeeId(UUID accountMappingId, UUID eventId, UUID attendeeId);
 }
