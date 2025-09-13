@@ -95,10 +95,9 @@ public class Prompts {
             ### Guidelines:
             1. Posts must always be written in a human-like, natural tone.
             2. Adapt the writing style based on the social media channel:
-               - LinkedIn → professional, inspiring, industry-focused. Include relevant hashtags and a clear call-to-action (e.g., “Join us”, “Don’t miss it”).
-               - Twitter → short, catchy, conversational. Use trending hashtags and abbreviations where appropriate. Limit to concise statements that spark engagement.
-               - Instagram → casual, vibrant, visually engaging. Use emojis and community-driven language. Include 3–5 fun or trending hashtags.
-               - Facebook → friendly, approachable, and community-oriented. Slightly longer than Twitter, but more relaxed than LinkedIn. Encourage comments, likes, and shares.
+               - LinkedIn → Maintain a professional, inspiring, and industry-focused tone. Use relevant industry hashtags to increase reach. Always include a clear call-to-action (e.g., “Join us”, “Don’t miss it”, “Register now”). Highlight the event’s value for professionals, such as networking opportunities, learning, and industry trends. Ensure the post is concise, authoritative, and encourages engagement from business audiences.
+               - Twitter → Use a short, catchy, and conversational tone. Incorporate trending hashtags and relevant abbreviations to boost visibility. Keep posts concise, direct, and designed to spark quick engagement (e.g., questions, polls, or calls-to-action). Focus on immediacy and shareability.
+               - Facebook → Write in a friendly, approachable, and community-oriented style. Posts can be slightly longer, allowing for more context and storytelling. Encourage audience interaction through questions, prompts, or invitations to comment, like, and share. Highlight event benefits and foster a sense of belonging.
             
             3. Personalization:
                - Use the attendee’s name, designation, and company naturally.
@@ -109,10 +108,6 @@ public class Prompts {
                - For a **Speaker**, only mention the sessions they are speaking at (ignore the speaker details in the session object).
                - For an **Attendee**, mention notable sessions they are attending and optionally highlight speakers.
                - If no sessions are provided, focus on the overall event experience.
-            
-            5. Output format:
-               - Provide 5 posts variations per request.
-               - Posts should feel ready-to-publish.
             
             ### Must to do:
             - Evaluate the generated posts as per the standards of the specified social media channel.
@@ -126,13 +121,14 @@ public class Prompts {
             - Social media details (channel, tone)
             
             ### Output:
-            - Generate 5 social media post variations that fit the channel style, the attendee role, and the requested tone.
+            - Generate 3 social media post variations that fit the channel style, the attendee role, and the requested tone.
+            - Posts should feel ready-to-publish.
             - You must always respond in the following exact JSON structure, do not add any other field event if it is present in the java POJO:
             
             {
                 "posts": [
                     {
-                        "title": "Catchy one-liner title (≤20 words)",
+                        "title": "Catchy one-liner title (≤30 words)",
                         "description": "Detailed, engaging post description, Use proper grammar, punctuation, and spelling",
                     }
                 ]
@@ -156,8 +152,6 @@ public class Prompts {
               %s
             
             - Social Media Channel: %s
-            
-            Generate 2 engaging post variations tailored to the attendee's role and the specified social media channel.
             """;
 
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.learn.event_marketing.constants.Prompts.getFormattedPrompt;
 
@@ -74,13 +75,13 @@ public class PersonalizedPostService {
         entity.setEventDescription(request.getDescription());
         entity.setAttendeeId(request.getAttendeeProfile().getAttendeeId());
         marketingContent.getPosts()
-                .forEach(content -> {
+                .forEach((channel, contentList) -> contentList.forEach(content -> {
                     PersonalizedPostChannelContentEntity en = new PersonalizedPostChannelContentEntity();
-                    en.setChannelName(request.getSocialMediaChannel().getType());
+                    en.setChannelName(channel);
                     en.setTitle(content.getTitle());
                     en.setDescription(content.getDescription());
                     entity.addChannelContent(en);
-                });
+                }));
 
         return entity;
     }
@@ -104,7 +105,7 @@ public class PersonalizedPostService {
                             }
                             return content;
                         })
-                        .toList()
+                        .collect(Collectors.groupingBy(Content::getChannel))
         );
     }
 }

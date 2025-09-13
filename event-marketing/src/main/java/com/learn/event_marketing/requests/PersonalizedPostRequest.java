@@ -87,7 +87,6 @@ public class PersonalizedPostRequest {
     public enum SocialMediaChannel {
         LINKEDIN("linkedin"),
         TWITTER("twitter"),
-        INSTAGRAM("instagram"),
         FACEBOOK("facebook");
 
         private final String type;

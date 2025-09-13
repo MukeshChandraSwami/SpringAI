@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -16,7 +17,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonalizedPost {
 
-    private List<Content> posts;
+    private Map<String, List<Content>> posts;
 
     @Getter
     @Setter
