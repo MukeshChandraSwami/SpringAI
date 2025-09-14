@@ -176,8 +176,8 @@ public class Prompts {
     public static String getFormattedPrompt(PersonalizedPostRequest request, PostDetails post) {
         return PERSONALIZED_POST_PROMPT.formatted(request.getSocialMediaChannel().getType(),
                 request.getAttendeeProfile().getAttendeeType() == PersonalizedPostRequest.AttendeeType.ATTENDEE
-                        ? request.getSocialMediaChannel().getAttendeeTone()
-                        : request.getSocialMediaChannel().getSpeakerTone(),
+                        ? "request.getSocialMediaChannel().getAttendeeTone()"
+                        : "request.getSocialMediaChannel().getSpeakerTone()", // Update this
                 request.getAttendeeProfile().getAttendeeType().getType(), request.getTitle(), request.getDescription(), request.getEventDateAndTime(),
                 request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(), request.getAttendeeProfile().getDesignation(),
                 request.getAttendeeProfile().getCompanyName(), request.getThemingDetails().get(PRIMARY_COLOR), request.getThemingDetails().get(SECONDARY_COLOR),

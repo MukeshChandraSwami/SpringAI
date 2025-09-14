@@ -77,24 +77,14 @@ public class PersonalizedPostRequest {
 
     @Getter
     public enum SocialMediaChannel {
-        LINKEDIN("linkedin",
-                "conversational, approachable, and networking-oriented, capturing the excitement of being present. The mood is educational and inspirational, sharing key insights, takeaways, and energy from the sessions. Visuals are candid, lively, and authentic, showing genuine engagement and enthusiasm.",
-                "professional, confident, and thought-leadership driven, highlighting expertise and authority. The mood is celebratory and grateful, showing pride in being part of the event while also inspiring peers. Visuals are polished, branded, and credible, signaling authority and trust."),
-        TWITTER("twitter",
-                "conversational, immediate, and engagement-focused—made for quick reactions, friendly and observant, sharing fast takeaways, surprising moments, or live impressions.",
-                "bold, concise and authority-driven—designed to grab fast-scrolling attention, punchy headline or pull-quote, energetic and real-time, celebratory about the speaking role while signaling expertise. Also include a CTA to watch or follow live"),
-        FACEBOOK("facebook",
-                "Warm, excited and conversational — candid smile or action shot, natural/warm lighting. Community-first and humble — focus on connections, learning. soft warm palette, rounded fonts, subtle badge, short bold overlay text.",
-                "Confident, polished and inspiring — professional headshot or staged speaking photo, crisp lighting. Value-led messaging — lead with the takeaway or topic rather than boilerplate. clean sans-serif typography, high contrast/brand colors, bold headline + ample negative space.");
+        LINKEDIN("linkedin"),
+        TWITTER("twitter"),
+        FACEBOOK("facebook");
 
         private final String type;
-        private final String attendeeTone;
-        private final String speakerTone;
 
-        SocialMediaChannel(String type, String attendeeTone, String speakerTone) {
+        SocialMediaChannel(String type) {
             this.type = type;
-            this.attendeeTone = attendeeTone;
-            this.speakerTone = speakerTone;
         }
 
         public static SocialMediaChannel fromValue(String value) {
