@@ -2,6 +2,7 @@ package com.learn.event_marketing.service;
 
 import com.learn.event_marketing.entity.PersonalizedPostChannelContentEntity;
 import com.learn.event_marketing.entity.PersonalizedPostEntity;
+import com.learn.event_marketing.models.AiPersonalizedPostResponse;
 import com.learn.event_marketing.models.PersonalizedPost;
 import com.learn.event_marketing.models.PersonalizedPost.Content;
 import com.learn.event_marketing.repository.PersonalizedPostRepository;
@@ -36,11 +37,11 @@ public class PersonalizedPostService {
 
     public Response generatePersonalizedPostContent(UUID acct_id, PersonalizedPostRequest request) {
 
-        PersonalizedPost marketingContent = chatClient.prompt()
+        AiPersonalizedPostResponse marketingContent = chatClient.prompt()
                 .user(spec -> spec
                         .text(getFormattedPrompt(request)))
                 .call()
-                .entity(PersonalizedPost.class);
+                .entity(AiPersonalizedPostResponse.class);
 
         PersonalizedPostEntity savedEn = repository.save(toPersonalizedPostEntity(acct_id, request, marketingContent));
 
@@ -66,7 +67,7 @@ public class PersonalizedPostService {
     }
 
     private PersonalizedPostEntity toPersonalizedPostEntity(UUID acctId, PersonalizedPostRequest request,
-                                                            PersonalizedPost marketingContent) {
+                                                            AiPersonalizedPostResponse marketingContent) {
 
         PersonalizedPostEntity entity = new PersonalizedPostEntity();
         entity.setAccountMappingId(acctId);
@@ -75,13 +76,13 @@ public class PersonalizedPostService {
         entity.setEventDescription(request.getDescription());
         entity.setAttendeeId(request.getAttendeeProfile().getAttendeeId());
         marketingContent.getPosts()
-                .forEach((channel, contentList) -> contentList.forEach(content -> {
+                .forEach(p -> {
                     PersonalizedPostChannelContentEntity en = new PersonalizedPostChannelContentEntity();
-                    en.setChannelName(channel);
-                    en.setTitle(content.getTitle());
-                    en.setDescription(content.getDescription());
+                    en.setChannelName(request.getSocialMediaChannel().getType());
+                    en.setTitle(p.getTitle());
+                    en.setDescription(p.getDescription());
                     entity.addChannelContent(en);
-                }));
+                });
 
         return entity;
     }
