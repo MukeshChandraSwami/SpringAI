@@ -19,7 +19,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.learn.media_generator.constants.Prompts.getFormattedPrompt;
+import static com.learn.media_generator.constants.Prompts.gerFormattedPromptForFacebook;
+import static com.learn.media_generator.constants.Prompts.gerFormattedPromptForLinkedIN;
+import static com.learn.media_generator.constants.Prompts.gerFormattedPromptForTwitter;
 import static com.learn.media_generator.utils.FileUtils.uploadFile;
 
 @Service
@@ -52,7 +54,14 @@ public class PersonalizedPostService {
                             .width(post.getWidth() > 0 ? post.getWidth() : 1024)
                             .height(post.getHeight() > 0 ? post.getHeight() : 1024)
                             .build();
-                    ImagePrompt prompt = new ImagePrompt(getFormattedPrompt(request, post), imageOptions);
+
+                    String instructions = switch (request.getSocialMediaChannel()) {
+                        case LINKEDIN -> gerFormattedPromptForLinkedIN(request);
+                        case FACEBOOK -> gerFormattedPromptForFacebook(request);
+                        case TWITTER -> gerFormattedPromptForTwitter(request);
+                    };
+
+                    ImagePrompt prompt = new ImagePrompt(instructions, imageOptions);
 
                     return imageModel.call(prompt).getResults().stream()
                             .map(img -> {

@@ -4,6 +4,11 @@ import com.learn.media_generator.requests.MediaRequest.MediaDetails;
 import com.learn.media_generator.requests.PersonalizedPostRequest;
 import com.learn.media_generator.requests.PersonalizedPostRequest.PostDetails;
 
+import static com.learn.media_generator.requests.PersonalizedPostRequest.ThemeElement.BACKGROUND_COLOR;
+import static com.learn.media_generator.requests.PersonalizedPostRequest.ThemeElement.CARD_COLOR;
+import static com.learn.media_generator.requests.PersonalizedPostRequest.ThemeElement.PRIMARY_COLOR;
+import static com.learn.media_generator.requests.PersonalizedPostRequest.ThemeElement.SECONDARY_COLOR;
+
 public class Prompts {
 
     public final static String MEDIA_GENERATOR_PROMPT = """
@@ -42,10 +47,34 @@ public class Prompts {
             13. Avoid using any copyrighted material or logos unless explicitly provided.
             14. Ensure the image should reflect the event status (e.g., upcoming, active, completed).
             """;
-    
-    public static final String PERSONALIZED_POST_PROMPT = """
+
+    public static final String PERSONALIZED_POST_PROMPT = "You are an AI assistant that generates social media-ready event images.";
+
+    public static final String PERSONALIZED_POST_PROMPT_1 = """
             You are an AI assistant that generates social media-ready event images.
-            I am attending the event as %s and would like you to create a high-quality, visually engaging image personalized for the given attendee and event.
+            
+            ### Image Generation Guidelines:
+            1. Event branding:
+               - Display the event title and date clearly.
+               - Optionally include a short tagline or phrase from the event description.
+            
+            2. Attendee personalisation:
+               - Always include attendee's full name, designation, and company.
+               - Ensure personalisation integrates naturally with the overall layout.
+            
+            3. Styling & Colors:
+               - I will provide 4 colors in hex formate:- Primary and secondary colors are the main brand colors used to style key elements across an interface.
+                    - Primary Color → The primary color typically appears on buttons and links, representing the main action or brand identity.
+                    - Secondary Color → The secondary color adds visual contrast or flair, such as highlighting timelines or accent elements.
+                    - Background Color -> Background color is the base color for large areas on a image, setting the overall tone.
+                    - Card color -> Card color is used for any containers or cards within a image, helping that block stand out from the main background.
+               - This image will be posted on %s. Its tone should be %s.
+            
+            4. Output:
+               - Generate a polished and social-media ready image.
+               - Do not include any explanatory text outside of the designed content.
+            
+            I am attending the event as %s and would like you to create a high-quality, visually engaging image personalised for the given attendee and event.
             
             Event details:
             - Title: %s
@@ -57,31 +86,82 @@ public class Prompts {
             - Designation: %s
             - Company: %s
             
-            - Social Media Channel: %s
+            Colors Details:
+            - Primary Color: %s
+            - Secondary Color: %s
+            - Background Color: %s
+            - Card Color: %s
+            """;
+
+    public static final String PERSONALIZED_POST_PROMPT_LINKEDIN = """
+            You are an AI assistant that generates social media-ready event images.
             
-            ### Image Generation Guidelines:
-            1. Event branding:
-               - Display the event title and date clearly.
-               - Optionally include a short tagline or phrase from the event description.
-               - Use the event’s theme or domain (e.g., technology, healthcare, marketing, leadership) as inspiration for background visuals.
+            Create a professional LinkedIn-style event announcement image.
+            Tone: Enthusiastic, professional, community-driven, and celebratory.
             
-            2. Attendee personalization:
-               - Always include attendee’s full name, designation, and company.
-               - Apply the runtime personalization details → %s
+            Details to include:
+            - Event Title: %s
+            - Event Date: %s
+            - Personalization Text: "%s"
+            - Name: %s
+            - Designation: %s
+            - Company: %s
             
-            3. Channel-specific adaptation:
-               - LinkedIn → professional, sleek, corporate look with muted tones.
-               - Twitter → bold, minimal, strong typography.
-               - Instagram → colorful, vibrant, playful, visually dynamic.
-               - Facebook → approachable, community-focused, warm design.
+            Design style:
+            - Clean, modern, and minimal with a professional color palette (%s, %s, %s, %s).
+            - Abstract geometric shapes, gradients, and subtle patterns for a festive but professional look.
+            - Event details neatly at the top.
+            - Space for event logo in the top-right.
+            - Optional: Highlight role with a small badge or ribbon to emphasize contribution.
+            - Should feel celebratory, shareable, and LinkedIn-appropriate.
+            - Use event description to narrow down the design context (Do not include it in the image): %s
+            """;
+
+    public static final String PERSONALIZED_POST_PROMPT_FACEBOOK = """
+            You are an AI assistant that generates social media-ready event images.
             
-            4. Optional common enhancements:
-               - If attendee’s photo URL is available, integrate it seamlessly into the design.
-               - If no photo is available, generate a polished template that still highlights their details.
+            Create a Facebook-style event announcement image.
+            Tone: Friendly, enthusiastic, social, and community-driven.
             
-            5. Output:
-               - Generate a polished event image that feels professional and social-media ready.
-               - Do not include any explanatory text outside of the designed content.
+            Details to include:
+            - Event Title: %s
+            - Event Date: %s
+            - Personalization Text: "%s"
+            - Name: %s
+            - Designation: %s
+            - Company: %s
+            
+            Design style:
+            - Bright, colorful, and engaging with a social feel with following color combination:- (%s, %s, %s, %s).
+            - Use lively shapes, gradients, and soft backgrounds.
+            - Event details shown casually at the top or bottom.
+            - Event logo included in the design.
+            - Should feel welcoming, festive, and Facebook-friendly.
+            - Use event description to narrow down the design context (Do not include it in the image): %s
+            """;
+            // - Add fun elements for a celebratory effect.
+
+    public static final String PERSONALIZED_POST_PROMPT_TWITTER = """
+            You are an AI assistant that generates social media-ready event images.
+            
+            Create a Twitter/X-style event announcement image.
+            Tone: Bold, energetic, concise, and shareable.
+            
+            Details to include:
+            - Event Title: %s
+            - Event Date: %s
+            - Personalization Text: "%s"
+            - Name: %s
+            - Designation: %s
+            - Company: %s
+            
+            Design style:
+            - Eye-catching, high-contrast visuals using a combination of the following colors (%s, %s, %s, %s)
+            - Event details kept concise, shown at the top or bottom.
+            - Event logo in a corner.
+            - Use dynamic elements to add energy.
+            - Should feel fast, engaging, and Twitter-friendly.
+            - Use event description to narrow down the design context (Do not include it in the image): %s
             """;
 
     public static String getFormattedPrompt(MediaDetails request) {
@@ -94,10 +174,52 @@ public class Prompts {
     }
 
     public static String getFormattedPrompt(PersonalizedPostRequest request, PostDetails post) {
-        return PERSONALIZED_POST_PROMPT.formatted(request.getAttendeeProfile().getAttendeeType(),
-                request.getTitle(), request.getDescription(), request.getEventDateAndTime(),
+        return PERSONALIZED_POST_PROMPT.formatted(request.getSocialMediaChannel().getType(),
+                request.getAttendeeProfile().getAttendeeType() == PersonalizedPostRequest.AttendeeType.ATTENDEE
+                        ? request.getSocialMediaChannel().getAttendeeTone()
+                        : request.getSocialMediaChannel().getSpeakerTone(),
+                request.getAttendeeProfile().getAttendeeType().getType(), request.getTitle(), request.getDescription(), request.getEventDateAndTime(),
+                request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(), request.getAttendeeProfile().getDesignation(),
+                request.getAttendeeProfile().getCompanyName(), request.getThemingDetails().get(PRIMARY_COLOR), request.getThemingDetails().get(SECONDARY_COLOR),
+                request.getThemingDetails().get(BACKGROUND_COLOR), request.getThemingDetails().get(CARD_COLOR));
+    }
+
+    public static String gerFormattedPromptForLinkedIN(PersonalizedPostRequest request) {
+        return PERSONALIZED_POST_PROMPT_LINKEDIN.formatted(request.getTitle(), request.getEventDateAndTime(),
+                request.getAttendeeProfile().getAttendeeType() == PersonalizedPostRequest.AttendeeType.ATTENDEE
+                        ? "I'm Joining"
+                        : "I'm Speaking",
                 request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(),
                 request.getAttendeeProfile().getDesignation(), request.getAttendeeProfile().getCompanyName(),
-                request.getSocialMediaChannel(), request.getThemingDetails());
+                request.getThemingDetails().get(PRIMARY_COLOR), request.getThemingDetails().get(SECONDARY_COLOR),
+                request.getThemingDetails().get(BACKGROUND_COLOR), request.getThemingDetails().get(CARD_COLOR),
+                request.getDescription()
+                );
+    }
+
+    public static String gerFormattedPromptForFacebook(PersonalizedPostRequest request) {
+        return PERSONALIZED_POST_PROMPT_FACEBOOK.formatted(request.getTitle(), request.getEventDateAndTime(),
+                request.getAttendeeProfile().getAttendeeType() == PersonalizedPostRequest.AttendeeType.ATTENDEE
+                        ? "I'm Joining"
+                        : "I'm Speaking",
+                request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(),
+                request.getAttendeeProfile().getDesignation(), request.getAttendeeProfile().getCompanyName(),
+                request.getThemingDetails().get(PRIMARY_COLOR), request.getThemingDetails().get(SECONDARY_COLOR),
+                request.getThemingDetails().get(BACKGROUND_COLOR), request.getThemingDetails().get(CARD_COLOR),
+                request.getDescription()
+        );
+    }
+
+    public static String gerFormattedPromptForTwitter(PersonalizedPostRequest request) {
+        return PERSONALIZED_POST_PROMPT_TWITTER.formatted(request.getTitle(), request.getEventDateAndTime(),
+                request.getAttendeeProfile().getAttendeeType() == PersonalizedPostRequest.AttendeeType.ATTENDEE
+                        ? "I'm Joining"
+                        : "I'm Speaking",
+                request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(),
+                request.getAttendeeProfile().getDesignation(), request.getAttendeeProfile().getCompanyName(),
+                request.getThemingDetails().get(PRIMARY_COLOR), request.getThemingDetails().get(SECONDARY_COLOR),
+                request.getThemingDetails().get(BACKGROUND_COLOR), request.getThemingDetails().get(CARD_COLOR),
+                request.getDescription()
+        );
     }
 }
