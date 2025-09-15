@@ -56,8 +56,9 @@ public class MediaGenerationService {
         throw new RuntimeException("Error while fetching media for event: " + eventId);
     }
 
-    public void generateMediaForPersonalizedPost(UUID acctId, PersonalizedPostRequest request, PersonalizedPostEntity entity) {
-        PersonalizedPostMediaRequest mediaRequest = getPersonalizedPostMediaRequest(request, entity);
+    public void generateMediaForPersonalizedPost(UUID acctId, PersonalizedPostRequest request, PersonalizedPostEntity entity,
+                                                 PersonalizedPostRequest.SocialMediaChannel channel) {
+        PersonalizedPostMediaRequest mediaRequest = getPersonalizedPostMediaRequest(request, entity, channel);
 
         try {
             MediaResponse mediaResponse = restTemplate.postForObject(ACT + "/" + acctId + POST,
@@ -104,7 +105,8 @@ public class MediaGenerationService {
 
     }
 
-    private PersonalizedPostMediaRequest getPersonalizedPostMediaRequest(PersonalizedPostRequest request, PersonalizedPostEntity entity) {
+    private PersonalizedPostMediaRequest getPersonalizedPostMediaRequest(PersonalizedPostRequest request, PersonalizedPostEntity entity,
+                                                                         PersonalizedPostRequest.SocialMediaChannel channel) {
         PersonalizedPostMediaRequest mediaRequest = new PersonalizedPostMediaRequest();
 
         mediaRequest.setEventId(request.getEventId());
@@ -112,7 +114,7 @@ public class MediaGenerationService {
         mediaRequest.setDescription(request.getDescription());
         mediaRequest.setEventDateAndTime(request.getEventDateAndTime());
         mediaRequest.setAttendeeProfile(request.getAttendeeProfile());
-        mediaRequest.setSocialMediaChannel(request.getSocialMediaChannel());
+        mediaRequest.setSocialMediaChannel(channel);
         mediaRequest.setThemingDetails(request.getThemingDetails());
         mediaRequest.setPostDetails(entity.getChannelContent()
                 .stream()

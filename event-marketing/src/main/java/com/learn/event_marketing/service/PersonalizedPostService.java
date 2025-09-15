@@ -14,6 +14,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,21 +38,27 @@ public class PersonalizedPostService {
 
     public Response generatePersonalizedPostContent(UUID acct_id, PersonalizedPostRequest request) {
 
-        AiPersonalizedPostResponse marketingContent = chatClient.prompt()
-                .user(spec -> spec
-                        .text(getFormattedPrompt(request)))
-                .call()
-                .entity(AiPersonalizedPostResponse.class);
+        List<PersonalizedPostEntity> personalizedPostEntities = new ArrayList<>();
 
-        PersonalizedPostEntity savedEn = repository.save(toPersonalizedPostEntity(acct_id, request, marketingContent));
+        request.getSocialMediaChannels()
+                .forEach(socialMediaChannel -> {
+                    AiPersonalizedPostResponse marketingContent = chatClient.prompt()
+                            .user(spec -> spec
+                                    .text(getFormattedPrompt(request, socialMediaChannel)))
+                            .call()
+                            .entity(AiPersonalizedPostResponse.class);
 
-        new Thread(() -> mediaGenerationService.generateMediaForPersonalizedPost(acct_id, request, savedEn)).start();
+                    PersonalizedPostEntity savedEn = repository.save(toPersonalizedPostEntity(acct_id, request, marketingContent, socialMediaChannel));
+                    new Thread(() -> mediaGenerationService.generateMediaForPersonalizedPost(acct_id, request, savedEn, socialMediaChannel)).start();
+
+                    personalizedPostEntities.add(savedEn);
+                });
 
         return PersonalizedPostResponse.builder()
                 .success(true)
                 .responseMsg("Personalized post content generated successfully")
                 .responseCode(200)
-                .personalizedPost(toPersonalizedPostResponse(List.of(savedEn), null))
+                .personalizedPost(toPersonalizedPostResponse(personalizedPostEntities, null))
                 .build();
     }
 
@@ -67,7 +74,8 @@ public class PersonalizedPostService {
     }
 
     private PersonalizedPostEntity toPersonalizedPostEntity(UUID acctId, PersonalizedPostRequest request,
-                                                            AiPersonalizedPostResponse marketingContent) {
+                                                            AiPersonalizedPostResponse marketingContent,
+                                                            PersonalizedPostRequest.SocialMediaChannel channel) {
 
         PersonalizedPostEntity entity = new PersonalizedPostEntity();
         entity.setAccountMappingId(acctId);
@@ -78,7 +86,7 @@ public class PersonalizedPostService {
         marketingContent.getPosts()
                 .forEach(p -> {
                     PersonalizedPostChannelContentEntity en = new PersonalizedPostChannelContentEntity();
-                    en.setChannelName(request.getSocialMediaChannel().getType());
+                    en.setChannelName(channel.getType());
                     en.setTitle(p.getTitle());
                     en.setDescription(p.getDescription());
                     entity.addChannelContent(en);

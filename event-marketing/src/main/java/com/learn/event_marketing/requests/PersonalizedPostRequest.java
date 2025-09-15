@@ -29,7 +29,11 @@ public class PersonalizedPostRequest {
     private String eventDateAndTime;
     private Map<ThemeElement, String> themingDetails;
     private AttendeeProfile attendeeProfile;
+    private List<SocialMediaChannel> socialMediaChannels;
+
+    // Do not use following field
     private SocialMediaChannel socialMediaChannel;
+
 
     /* ******
     * A person can attend sessions, can be a speaker of sessions.

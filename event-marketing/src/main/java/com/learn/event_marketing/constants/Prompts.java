@@ -121,7 +121,7 @@ public class Prompts {
             - Social media details (channel, tone)
             
             ### Output:
-            - Generate 3 social media post variations that fit the channel style, the attendee role, and the requested tone.
+            - Generate 1 social media post variations that fit the channel style, the attendee role, and the requested tone.
             - Posts should feel ready-to-publish.
             - You must always respond in the following exact JSON structure, do not add any other field event if it is present in the java POJO:
             
@@ -161,13 +161,13 @@ public class Prompts {
                 request.getAudience(), request.getDemography(), request.getBudget());
     }
 
-    public static String getFormattedPrompt(PersonalizedPostRequest request) {
+    public static String getFormattedPrompt(PersonalizedPostRequest request, PersonalizedPostRequest.SocialMediaChannel channel) {
         String sessionsInfo = formatedSessions(request.getSessions());
         return PERSONALIZED_POST_USER_PROMPT.formatted(request.getAttendeeProfile().getAttendeeType().getType(),
                 request.getTitle(), request.getDescription(), request.getEventDateAndTime(),
                 request.getAttendeeProfile().getFirstName() + " " + request.getAttendeeProfile().getLastName(),
                 request.getAttendeeProfile().getDesignation(), request.getAttendeeProfile().getCompanyName(),
-                sessionsInfo, request.getSocialMediaChannel().getType());
+                sessionsInfo, channel.getType());
     }
 
     /**
