@@ -123,7 +123,7 @@ public class MediaGenerationService {
                             .description(content.getDescription())
                             .height(1024)
                             .width(1024)
-                            .imageFormat(PersonalizedPostMediaRequest.ImageFormat.WEBP)
+                            .imageFormat(PersonalizedPostMediaRequest.ImageFormat.JPEG)
                             .build();
                 }).toList()
         );

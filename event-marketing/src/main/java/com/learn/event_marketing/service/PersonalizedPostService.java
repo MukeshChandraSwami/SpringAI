@@ -45,7 +45,7 @@ public class PersonalizedPostService {
 
         PersonalizedPostEntity savedEn = repository.save(toPersonalizedPostEntity(acct_id, request, marketingContent));
 
-        // new Thread(() -> mediaGenerationService.generateMediaForPersonalizedPost(acct_id, request, savedEn)).start();
+        new Thread(() -> mediaGenerationService.generateMediaForPersonalizedPost(acct_id, request, savedEn)).start();
 
         return PersonalizedPostResponse.builder()
                 .success(true)

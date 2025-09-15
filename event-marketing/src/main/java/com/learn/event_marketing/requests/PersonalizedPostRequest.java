@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -26,7 +27,7 @@ public class PersonalizedPostRequest {
     private String title;
     private String description;
     private String eventDateAndTime;
-    private String themingDetails;
+    private Map<ThemeElement, String> themingDetails;
     private AttendeeProfile attendeeProfile;
     private SocialMediaChannel socialMediaChannel;
 
@@ -102,6 +103,20 @@ public class PersonalizedPostRequest {
                 }
             }
             throw new IllegalArgumentException("No enum constant with value: " + value);
+        }
+    }
+
+    @Getter
+    public enum ThemeElement {
+        PRIMARY_COLOR("primary_color"),
+        SECONDARY_COLOR("secondary_color"),
+        BACKGROUND_COLOR("background_color"),
+        CARD_COLOR("card_color");
+
+        private final String element;
+
+        ThemeElement(String element) {
+            this.element = element;
         }
     }
 }
