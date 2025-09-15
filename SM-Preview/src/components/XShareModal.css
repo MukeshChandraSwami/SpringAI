@@ -1,0 +1,242 @@
+.x-share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.x-share-modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.x-share-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.platform-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.platform-icon-large.x-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #000000;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.x-share-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #14171a;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  color: #536471;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: #f7f9fa;
+}
+
+.x-share-content {
+  padding: 20px;
+}
+
+.content-preview h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #14171a;
+}
+
+.content-box {
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #f7f9fa;
+  margin-bottom: 12px;
+}
+
+.content-text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #14171a;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.character-count {
+  font-size: 14px;
+  color: #536471;
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.images-note {
+  margin: 20px 0;
+  padding: 16px;
+  background-color: #f0f8ff;
+  border-radius: 12px;
+  border: 1px solid #1da1f2;
+}
+
+.images-note h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #14171a;
+}
+
+.image-preview-list {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+}
+
+.image-note {
+  font-size: 14px;
+  color: #536471;
+  margin: 0;
+  font-style: italic;
+}
+
+.instructions {
+  margin: 20px 0;
+  padding: 16px;
+  background-color: #f7f9fa;
+  border-radius: 12px;
+}
+
+.instructions h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #14171a;
+}
+
+.instructions ol {
+  margin: 0;
+  padding-left: 20px;
+  color: #536471;
+}
+
+.instructions li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.x-share-actions {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-top: 1px solid #e1e8ed;
+}
+
+.copy-only-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #000000;
+  background-color: white;
+  color: #000000;
+  border-radius: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.copy-only-btn:hover:not(:disabled) {
+  background-color: #f7f9fa;
+}
+
+.copy-only-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.copy-and-share-btn {
+  flex: 2;
+  padding: 12px 16px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.copy-and-share-btn:hover {
+  background-color: #1a1a1a;
+}
+
+.success-message {
+  padding: 12px 20px;
+  background-color: #00ba7c;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  margin: 0;
+  border-radius: 0 0 16px 16px;
+}
+
+@media (max-width: 480px) {
+  .x-share-modal {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .x-share-actions {
+    flex-direction: column;
+  }
+  
+  .image-preview-list {
+    justify-content: center;
+  }
+}

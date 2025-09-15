@@ -1,0 +1,247 @@
+.linkedin-share-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.linkedin-share-modal {
+  background: white;
+  border-radius: 12px;
+  max-width: 550px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.linkedin-share-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #e1e5e9;
+  background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.linkedin-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.linkedin-icon-large {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #0077b5;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.linkedin-share-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.linkedin-share-content {
+  padding: 20px;
+}
+
+.content-preview h4 {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.content-box {
+  border: 2px solid #0077b5;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f8f9fb;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.content-box:hover {
+  background-color: #f0f4f8;
+  border-color: #005885;
+}
+
+.content-text {
+  margin: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #2c3e50;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.success-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #27ae60;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background-color: #d5f4e6;
+  border-radius: 6px;
+  border-left: 4px solid #27ae60;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e74c3c;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background-color: #fdf2f2;
+  border-radius: 6px;
+  border-left: 4px solid #e74c3c;
+}
+
+.instructions {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #0077b5;
+}
+
+.instructions h4 {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.instructions ol {
+  margin: 0;
+  padding-left: 16px;
+  color: #5f6368;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.instructions li {
+  margin-bottom: 4px;
+}
+
+.linkedin-share-actions {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-top: 1px solid #e1e5e9;
+  justify-content: flex-end;
+}
+
+.manual-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #0077b5;
+  background: white;
+  color: #0077b5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.manual-copy-btn:hover {
+  background-color: #f0f8ff;
+  border-color: #005885;
+}
+
+.copy-and-share-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 160px;
+  justify-content: center;
+}
+
+.copy-and-share-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+}
+
+.copy-and-share-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .linkedin-share-overlay {
+    padding: 10px;
+  }
+  
+  .linkedin-share-modal {
+    max-height: 95vh;
+  }
+  
+  .linkedin-share-header {
+    padding: 16px;
+  }
+  
+  .linkedin-share-content {
+    padding: 16px;
+  }
+  
+  .linkedin-share-actions {
+    padding: 16px;
+    flex-direction: column;
+  }
+  
+  .manual-copy-btn,
+  .copy-and-share-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
